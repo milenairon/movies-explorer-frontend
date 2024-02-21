@@ -1,0 +1,17 @@
+.about-project {
+  background-color: #272727;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  margin: 0 40px;
+  padding: 160px 0 0;
+}
+
+.about-project__title {
+  max-width: 730px;
+  color: #ffffff;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 58px;
+  text-align: center;
+  letter-spacing: -0.04em;
+  margin: 0 auto;
+}

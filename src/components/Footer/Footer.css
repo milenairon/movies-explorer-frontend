@@ -1,0 +1,32 @@
+.footer {
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  padding: 79px 70px 20px;
+}
+
+.footer__title {
+  color: #8b8b8b;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  padding: 0 0 20px;
+  border-bottom: 1px solid #424242;
+  text-align: center;
+}
+
+.footer__container {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+}
+
+.footer__box {
+  display: flex;
+  gap: 20px;
+}
+
+.footer__text {
+  color: #ffffff;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+}
