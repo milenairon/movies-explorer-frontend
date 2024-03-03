@@ -3,13 +3,15 @@
 import React from "react";
 import "./Popup.css";
 import { NavLink } from "react-router-dom";
-import popupCloseIcon from "../../images/popup__button-close.svg"
+import popupCloseIcon from "../../images/popup__button-close.svg";
 
 export default function Popup({ name, onClose, isOpen }) {
   return (
-    <div className={`popup popup__container_place_${name} ${
-      !isOpen ? "" : "popup_opened"
-    }`}>
+    <div
+      className={`popup popup__container_place_${name} ${
+        !isOpen ? "" : "popup_opened"
+      }`}
+    >
       <div className={`popup__container popup__container_place_${name}`}>
         <button
           aria-label="Закрыть"
@@ -24,15 +26,29 @@ export default function Popup({ name, onClose, isOpen }) {
           />
         </button>
         <div className="popup__box">
-          <NavLink to="/" className="popup__link">
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? "popup__link popup__link_active" : "popup__link"
+            }
+            to="/"
+          >
             Главная
           </NavLink>
-          <NavLink to="/movies" className="popup__link">
+          <NavLink
+            to="/movies"
+            className={({ isActive }) =>
+              isActive ? "popup__link popup__link_active" : "popup__link"
+            }
+          >
             Фильмы
           </NavLink>
           <NavLink
             to="/saved-movies"
-            className="popup__link popup__link_size_m"
+            className={({ isActive }) =>
+              isActive
+                ? "popup__link popup__link_size_m popup__link_active"
+                : "popup__link popup__link_size_m"
+            }
           >
             Сохранённые фильмы
           </NavLink>
@@ -44,4 +60,3 @@ export default function Popup({ name, onClose, isOpen }) {
     </div>
   );
 }
-
