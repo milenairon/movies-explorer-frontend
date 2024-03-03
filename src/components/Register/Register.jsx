@@ -4,7 +4,7 @@ import React from "react";
 import "./Register.css";
 import { NavLink } from "react-router-dom";
 
-export default function Register() {
+export default function Register({ handleChangeInput }) {
   return (
     <main className="register">
       <form name="formRegister" className="register__form">
@@ -18,6 +18,7 @@ export default function Register() {
             minLength={2}
             maxLength={30}
             required={true}
+            onChange={handleChangeInput}
             pattern="[A-Za-zА-Яа-яЁё\s-]+"
           />
           <span className="register__input-error-message-live name-input-error-message register__input-error-message-live_visible">
@@ -34,6 +35,7 @@ export default function Register() {
             minLength={5}
             maxLength={40}
             required={true}
+            onChange={handleChangeInput}
             pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
           />
           <span className="register__input-error-message-live email-input-error-message register__input-error-message-live_visible">
@@ -50,6 +52,7 @@ export default function Register() {
             minLength={2}
             maxLength={10}
             required={true}
+            onChange={handleChangeInput}
           />
           <span className="register__input-error-message-live password-input-error-message register__input-error-message-live_visible">
             ошибка маил

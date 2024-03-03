@@ -3,10 +3,10 @@
 import React from "react";
 import Popup from "../Popup/Popup";
 
-export default function PopupMenu() {
+export default function PopupMenu({ onClose, isOpen }) {
   return (
     <>
-      <Popup name="popup-menu" />
+      <Popup name="popup-menu" onClose={onClose} isOpen={isOpen} />
     </>
   );
 }

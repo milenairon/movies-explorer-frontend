@@ -4,7 +4,7 @@ import React from "react";
 import "./Login.css";
 import { NavLink } from "react-router-dom";
 
-export default function Login() {
+export default function Login({ handleChangeInput }) {
   return (
     <main className="login">
       <form name="formLogin" className="login__form">
@@ -17,6 +17,7 @@ export default function Login() {
             minLength={5}
             maxLength={40}
             required={true}
+            onChange={handleChangeInput}
             pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
           />
           <span className="login__input-error-message-live email-input-error-message register__input-error-message-live_visible">
@@ -32,6 +33,7 @@ export default function Login() {
             minLength={2}
             maxLength={10}
             required={true}
+            onChange={handleChangeInput}
           />
           <span className="login__input-error-message-live password-input-error-message register__input-error-message-live_visible">
             ошибка
@@ -48,6 +50,5 @@ export default function Login() {
         </div>
       </form>
     </main>
-
   );
 }

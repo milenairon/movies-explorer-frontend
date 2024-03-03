@@ -30,7 +30,57 @@ function App() {
   const [readonly, setReadonly] = React.useState(false); // true
   const [savedMovies, setSavedMovies] = React.useState(true); // false
   const [pageSavedMovies, setPageSavedMovies] = React.useState(false); // false
-  
+  const [isPopupMenuOpen, setIsPopupMenuOpen] = React.useState(false);
+  const isSomePopupOpen = isPopupMenuOpen; // + "|| другой попап || еще другой попап"
+  //ОТКРЫТЬ ПОПАПЫ
+  function openPopupMenu() {
+    setIsPopupMenuOpen(true);
+  }
+
+  // ЗАКРЫТЬ ПОПАПЫ
+  //закрыть попап на темный фон
+  const handleOverlayClose = React.useCallback((event) => {
+    if (event.target.classList.contains("popup")) {
+      closeAllPopups();
+    }
+  }, []);
+
+  //закрытие на esc
+  const handleCloseByEsc = React.useCallback((event) => {
+    if (event.key === "Escape") {
+      closeAllPopups();
+    }
+  }, []);
+
+  //закрыть все попапы(если будут еще)
+  function closeAllPopups() {
+    setIsPopupMenuOpen(false);
+  }
+
+  //закрытие попапа на темный фон и esc
+  React.useEffect(() => {
+    if (isSomePopupOpen) {
+      document.addEventListener("keydown", handleCloseByEsc);
+      document.addEventListener("click", handleOverlayClose);
+      return () => {
+        document.removeEventListener("keydown", handleCloseByEsc);
+        document.removeEventListener("click", handleOverlayClose);
+      };
+    }
+  }, [isSomePopupOpen]);
+
+  //ИЗМЕНЕНИЕ ИНПУТОВ
+  const [formValue, setFormValue] = React.useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  function handleChangeInput(e) {
+    const { name, value } = e.target;
+    setFormValue({ ...formValue, [name]: value });
+  }
+
   return (
     <div className="app">
       {/*<CurrentUserContext.Provider value={currentUser}>*/}
@@ -40,7 +90,7 @@ function App() {
             path="/"
             element={
               <>
-                <Header loggedIn={loggedIn} />
+                <Header loggedIn={loggedIn} isOpenPopupMenu={openPopupMenu} />
                 <Main />
                 <Footer />
               </>
@@ -50,7 +100,7 @@ function App() {
             path="/movies"
             element={
               <>
-                <Header loggedIn={loggedIn} />
+                <Header loggedIn={loggedIn} isOpenPopupMenu={openPopupMenu} />
                 <Movies isLoading={isLoading} savedMovies={savedMovies} />
                 <Footer />
               </>
@@ -60,8 +110,11 @@ function App() {
             path="/saved-movies"
             element={
               <>
-                <Header loggedIn={loggedIn} />
-                <SavedMovies savedMovies={savedMovies} pageSavedMovies={pageSavedMovies} />
+                <Header loggedIn={loggedIn} isOpenPopupMenu={openPopupMenu} />
+                <SavedMovies
+                  savedMovies={savedMovies}
+                  pageSavedMovies={pageSavedMovies}
+                />
                 <Footer />
               </>
             }
@@ -70,7 +123,7 @@ function App() {
             path="/profile"
             element={
               <>
-                <Header loggedIn={loggedIn} />
+                <Header loggedIn={loggedIn} isOpenPopupMenu={openPopupMenu} />
                 <Profile loggedIn={loggedIn} readonly={readonly} />
               </>
             }
@@ -80,7 +133,7 @@ function App() {
             element={
               <>
                 <Top text="Рады видеть!" />
-                <Login />
+                <Login handleChangeInput={handleChangeInput} />
               </>
             }
           />
@@ -89,14 +142,14 @@ function App() {
             element={
               <>
                 <Top text="Добро пожаловать!" />
-                <Register />
+                <Register handleChangeInput={handleChangeInput} />
               </>
             }
           />
           {/*replace возвращает новую строку с некоторыми или всеми сопоставлениями с шаблоном, заменёнными на заменитель*/}
           <Route path="*" element={<OtherPages />} />
         </Routes>
-        <PopupMenu />
+        <PopupMenu onClose={closeAllPopups} isOpen={isPopupMenuOpen} />
       </div>
       {/*</CurrentUserContext.Provider>*/}
     </div>

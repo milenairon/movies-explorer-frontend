@@ -3,7 +3,7 @@ import "./Header.css";
 import { NavLink } from "react-router-dom";
 import Navigation from "../Navigation/Navigation";
 
-export default function Header({ loggedIn }) {
+export default function Header({ loggedIn, isOpenPopupMenu }) {
   // ПОПАП С НАВИГАЦИЕЙ ПО САЙТУ
   const [width, setWidth] = React.useState(window.innerWidth);
   React.useEffect(() => {
@@ -64,7 +64,7 @@ export default function Header({ loggedIn }) {
       {loggedIn ? (
         <nav className="header__navigation">
           <NavLink to="/" className="header__link header__link-logo" />
-          <button aria-label="Меню" className="header__popup" type="button" />
+          <button onClick={isOpenPopupMenu} aria-label="Меню" className="header__popup" type="button" />
         </nav>
       ) : (
         <nav className="header__navigation">
