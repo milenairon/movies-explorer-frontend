@@ -1,6 +1,6 @@
 //React
 import React from "react";
-import { Routes, Route /*, Navigate , useNavigate*/ } from "react-router-dom";
+import { Routes, Route, /*Navigate ,*/ useNavigate } from "react-router-dom";
 
 //блоки
 import "./App.css";
@@ -17,6 +17,8 @@ import Register from "../Register/Register";
 //попапы
 import PopupMenu from "../Popup/Popup";
 //Запросы
+// import api from "../../utils/Api"
+import * as auth from "../../utils/auth";
 //прочее
 // МАССИВ КАРТОЧЕК
 // карточки как массив спускаются пропсом в конкретные компоненты и отрисовываются
@@ -32,6 +34,8 @@ function App() {
   const [pageSavedMovies, setPageSavedMovies] = React.useState(false); // false
   const [isPopupMenuOpen, setIsPopupMenuOpen] = React.useState(false);
   const isSomePopupOpen = isPopupMenuOpen; // + "|| другой попап || еще другой попап"
+  const navigate = useNavigate();
+
   //ОТКРЫТЬ ПОПАПЫ
   function openPopupMenu() {
     setIsPopupMenuOpen(true);
@@ -79,6 +83,19 @@ function App() {
   function handleChangeInput(e) {
     const { name, value } = e.target;
     setFormValue({ ...formValue, [name]: value });
+  }
+
+  //РЕГИСТРАЦИЯ
+  function handleSubmitRegister(e) {
+    e.preventDefault();
+    auth
+      .register(formValue.name, formValue.email, formValue.password)
+      .then(() => {
+        navigate("/signin");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   return (
@@ -133,7 +150,11 @@ function App() {
             element={
               <>
                 <Top text="Рады видеть!" />
-                <Login handleChangeInput={handleChangeInput} />
+                <Login
+                  handleChangeInput={handleChangeInput}
+                  email={formValue.email}
+                  password={formValue.password}
+                />
               </>
             }
           />
@@ -142,7 +163,13 @@ function App() {
             element={
               <>
                 <Top text="Добро пожаловать!" />
-                <Register handleChangeInput={handleChangeInput} />
+                <Register
+                  handleChangeInput={handleChangeInput}
+                  onSubmit={handleSubmitRegister}
+                  name={formValue.name}
+                  email={formValue.email}
+                  password={formValue.password}
+                />
               </>
             }
           />

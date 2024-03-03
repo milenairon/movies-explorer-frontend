@@ -4,7 +4,7 @@ import React from "react";
 import "./Login.css";
 import { NavLink } from "react-router-dom";
 
-export default function Login({ handleChangeInput }) {
+export default function Login({ handleChangeInput, email, password }) {
   return (
     <main className="login">
       <form name="formLogin" className="login__form">
@@ -17,11 +17,12 @@ export default function Login({ handleChangeInput }) {
             minLength={5}
             maxLength={40}
             required={true}
+            value={email}
             onChange={handleChangeInput}
             pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
           />
           <span className="login__input-error-message-live email-input-error-message register__input-error-message-live_visible">
-            ошибка
+           
           </span>
         </label>
         <label className="login__label">
@@ -33,10 +34,11 @@ export default function Login({ handleChangeInput }) {
             minLength={2}
             maxLength={10}
             required={true}
+            value={password}
             onChange={handleChangeInput}
           />
           <span className="login__input-error-message-live password-input-error-message register__input-error-message-live_visible">
-            ошибка
+      
           </span>
         </label>
         <button aria-label="Войти" className="login__button" type="submit">

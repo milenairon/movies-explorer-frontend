@@ -2,18 +2,20 @@
 
 import React from "react";
 import "./MoviesCard.css";
-import image from "../../images/image1.png";
 import imageSavedMovies from "../../images/movies-card__image-saved-movies.svg";
-import imageDeleteMovies from "../../images/movies-card__button-delete.svg"
+import imageDeleteMovies from "../../images/movies-card__button-delete.svg";
 
 export default function MoviesCard({
   savedMovies,
   pageSavedMovies,
   onDeleteMovies,
+  link,
+  name,
+  time,
 }) {
   return (
     <li className="movies-card">
-      <img className="movies-card__image" src={image} alt="бла бла бла" />
+      <img className="movies-card__image" src={link} alt={name} />
       {savedMovies ? (
         pageSavedMovies ? (
           <>
@@ -50,8 +52,8 @@ export default function MoviesCard({
         </>
       )}
       <div className="movies-card__box">
-        <p className="movies-card__name">33 слова о дизайне</p>
-        <p className="movies-card__time">1ч 17м</p>
+        <p className="movies-card__name">{name}</p>
+        <p className="movies-card__time">{time}</p>
       </div>
     </li>
   );

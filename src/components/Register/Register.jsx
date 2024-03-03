@@ -4,10 +4,16 @@ import React from "react";
 import "./Register.css";
 import { NavLink } from "react-router-dom";
 
-export default function Register({ handleChangeInput }) {
+export default function Register({
+  handleChangeInput,
+  onSubmit,
+  name,
+  email,
+  password,
+}) {
   return (
     <main className="register">
-      <form name="formRegister" className="register__form">
+      <form name="formRegister" className="register__form" onSubmit={onSubmit}>
         <label className="register__label">
           <span className="register__input-name">Имя</span>
           <input
@@ -18,12 +24,11 @@ export default function Register({ handleChangeInput }) {
             minLength={2}
             maxLength={30}
             required={true}
+            value={name}
             onChange={handleChangeInput}
             pattern="[A-Za-zА-Яа-яЁё\s-]+"
           />
-          <span className="register__input-error-message-live name-input-error-message register__input-error-message-live_visible">
-            ошибка маил
-          </span>
+          <span className="register__input-error-message-live name-input-error-message register__input-error-message-live_visible"></span>
         </label>
         <label className="register__label">
           <span className="register__input-name">E-mail</span>
@@ -35,12 +40,11 @@ export default function Register({ handleChangeInput }) {
             minLength={5}
             maxLength={40}
             required={true}
+            value={email}
             onChange={handleChangeInput}
             pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
           />
-          <span className="register__input-error-message-live email-input-error-message register__input-error-message-live_visible">
-            ошибка маил
-          </span>
+          <span className="register__input-error-message-live email-input-error-message register__input-error-message-live_visible"></span>
         </label>
         <label className="register__label">
           <span className="register__input-name">Пароль</span>
@@ -52,11 +56,10 @@ export default function Register({ handleChangeInput }) {
             minLength={2}
             maxLength={10}
             required={true}
+            value={password}
             onChange={handleChangeInput}
           />
-          <span className="register__input-error-message-live password-input-error-message register__input-error-message-live_visible">
-            ошибка маил
-          </span>
+          <span className="register__input-error-message-live password-input-error-message register__input-error-message-live_visible"></span>
         </label>
         <button
           aria-label="Зарегистрироваться"

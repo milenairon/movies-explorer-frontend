@@ -56,8 +56,7 @@ export default function Profile({ name, loggedIn, readonly }) {
         ) : (
           <>
             <span className="profile__input-error-message-web">
-            {/* profile__input-error-message-web_visible */}
-              общая ошибка
+              {/* profile__input-error-message-web_visible */}
             </span>
             <button
               aria-label="Сохранить"
