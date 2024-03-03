@@ -94,6 +94,17 @@
   }
 }
 
+/*ДОПОЛНИТЕЛЬНАЯ ШИРИНА ЭКРАНА*/
+@media screen and (max-width: 750px) {
+  .about-me {
+    padding: 90px 50px 0;
+  }
+  .about-me__box {
+    grid-template-columns: 0.6fr 0.3fr;
+    margin: 66px 0 0;
+  }
+}
+
 /*ШИРИНА ЭКРАНА 320px*/
 @media screen and (max-width: 540px) {
   .about-me {

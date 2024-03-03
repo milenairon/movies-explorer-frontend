@@ -87,6 +87,14 @@
   }
 }
 
+/*ДОПОЛНИТЕЛЬНАЯ ШИРИНА ЭКРАНА*/
+@media screen and (max-width: 750px) {
+  .techs__items {
+    margin: 83px 0 0;
+    grid-template-columns: repeat(3, 84px);
+  }
+}
+
 /*ШИРИНА ЭКРАНА 320px*/
 @media screen and (max-width: 540px) {
   .techs {
