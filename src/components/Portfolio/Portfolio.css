@@ -17,8 +17,8 @@
 
 .portfolio__item {
   padding: 0 0 19px;
-  max-width: 1140px;
   border-bottom: 1px solid #fff;
+  margin: 20px 0 0;
 }
 
 .portfolio__item:first-child {
@@ -30,12 +30,71 @@
   padding: 0;
 }
 
-.portfolio__link {
+.portfolio__link-text {
   color: #ffffff;
   font-weight: 400;
   font-size: 30px;
   line-height: 50px;
   letter-spacing: -0.04em;
   text-decoration: none;
-  margin: 20px 0 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.portfolio__link-text:last-of-type {
+  margin: 0;
+}
+
+.portfolio__link-logo {
+  width: 29px;
+  aspect-ratio: 29/60;
+}
+
+/* ЭФФЕКТЫ ЭФФЕКТЫ ЭФФЕКТЫ */
+.portfolio__link:hover {
+  opacity: 70%;
+}
+
+/*ШИРИНА ЭКРАНА 768px*/
+@media screen and (max-width: 1024px) {
+  .portfolio {
+    margin: 91px 0 0;
+    padding: 0 50px 90px;
+  }
+  .portfolio__title {
+    color: #a0a0a0;
+  }
+  .portfolio__item {
+    border-bottom: 1px solid #e6e6e6;
+  }
+  .portfolio__link-text {
+    font-size: 28px;
+    line-height: 50px;
+  }
+  .portfolio__link-logo {
+    width: 28px;
+    aspect-ratio: 28/60;
+  }
+}
+
+/*ШИРИНА ЭКРАНА 320px*/
+@media screen and (max-width: 540px) {
+  .portfolio {
+    margin: 70px 0 0;
+    padding: 0 14px 70px;
+  }
+  .portfolio__title {
+    font-size: 14px;
+  }
+  .portfolio__items {
+    margin: 40px 0 0;
+  }
+  .portfolio__link-text {
+    font-size: 18px;
+    line-height: 28px;
+  }
+  .portfolio__link-logo {
+    width: 18px;
+    aspect-ratio: 18/28;
+  }
 }

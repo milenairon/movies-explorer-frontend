@@ -33,7 +33,6 @@ export default function AboutMe() {
             Github
           </NavLink>
         </div>
-        <div></div>
         <img
           className="about-me__photo"
           src={photo}
@@ -43,3 +42,4 @@ export default function AboutMe() {
     </section>
   );
 }
+

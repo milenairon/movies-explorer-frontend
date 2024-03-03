@@ -1,0 +1,40 @@
+.top {
+  padding: 70px 0 40px;
+  text-align: left;
+  max-width: 396px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.top__logo {
+  max-width: 38px;
+  aspect-ratio: 1/1;
+}
+
+.top__title {
+  margin: 40px 0 0;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+}
+
+/*ШИРИНА ЭКРАНА 768px*/
+@media screen and (max-width: 1024px) {
+  .top {
+    padding: 232px 0 40px;
+  }
+}
+
+/*ШИРИНА ЭКРАНА 320px*/
+@media screen and (max-width: 540px) {
+  .top {
+    padding: 56px 0 30px;
+    max-width: 260px;
+    align-items: center;
+  }
+  .top__title {
+    margin: 50px 0 0;
+  }
+}

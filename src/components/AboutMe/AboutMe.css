@@ -5,7 +5,6 @@
 }
 
 .about-me__title {
-  max-width: 1140px;
   color: #ffffff;
   font-weight: 400;
   font-size: 22px;
@@ -17,13 +16,12 @@
 
 .about-me__box {
   display: grid;
-  max-width: 1280px;
-  grid-template-columns: 1fr 0.45fr minmax(255px, 0.45fr);
+  grid-template-columns: 600px minmax(270px, 0.45fr);
   margin: 66px 0 0;
+  justify-content: space-between;
 }
 
 .about-me__box-text {
-  max-width: 600px;
   color: #ffffff;
 }
 
@@ -61,4 +59,76 @@
   aspect-ratio: 270/327;
   border-radius: 10px;
   object-fit: cover;
+}
+
+/* ЭФФЕКТЫ ЭФФЕКТЫ ЭФФЕКТЫ */
+.about-me__link:hover {
+  opacity: 70%;
+}
+
+/*ШИРИНА ЭКРАНА 768px*/
+@media screen and (max-width: 1024px) {
+  .about-me {
+    padding: 90px 50px 0;
+  }
+  .about-me__box {
+    grid-template-columns: 364px minmax(255px, 0.7fr);
+    margin: 66px 0 0;
+  }
+  .about-me__name {
+    font-size: 40px;
+    line-height: 40px;
+  }
+  .about-me__specialization {
+    margin: 16px 0 0;
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .about-me__paragraph {
+    margin: 20px 0 87px;
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .about-me__photo {
+    aspect-ratio: 255/307;
+  }
+}
+
+/*ШИРИНА ЭКРАНА 320px*/
+@media screen and (max-width: 540px) {
+  .about-me {
+    padding: 70px 14px 0;
+  }
+  .about-me__title {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    padding: 0 0 28px;
+  }
+  .about-me__box {
+    grid-template-columns: 1fr;
+    margin: 60px 0 0;
+  }
+  .about-me__photo {
+    aspect-ratio: 292/352;
+    grid-row: 1;
+  }
+  .about-me__box-text {
+    grid-row: 2;
+    margin-top: 40px;
+  }
+  .about-me__name {
+    font-size: 30px;
+    line-height: 36px;
+  }
+  .about-me__specialization {
+    margin: 20px 0 0;
+    font-size: 11px;
+    line-height: 16px;
+  }
+  .about-me__paragraph {
+    margin: 20px 0 40px;
+    font-size: 11px;
+    line-height: 16px;
+  }
 }

@@ -1,4 +1,5 @@
 // компонент с навигацией по странице «О проекте»
+
 import React from "react";
 import "./NavTab.css";
 

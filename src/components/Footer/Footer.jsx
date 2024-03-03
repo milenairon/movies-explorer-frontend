@@ -1,6 +1,4 @@
-// презентационный компонент, который отрисовывает подвал.
-// компонент со ссылками на другие проекты
-// компонент с информацией о студенте
+// подвал.
 import React from "react";
 import "./Footer.css";
 
@@ -11,7 +9,7 @@ export default function Footer() {
         Учебный проект Яндекс.Практикум х BeatFilm.
       </h2>
       <div className="footer__container">
-        <p className="footer__text">© 2020</p>
+        <p className="footer__text footer__text_color_other">© 2024</p>
         <div className="footer__box">
           <p className="footer__text">Яндекс.Практикум</p>
           <p className="footer__text">Github</p>
