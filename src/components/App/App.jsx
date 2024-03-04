@@ -29,7 +29,7 @@ function App() {
   // функциональность вся:
   const [loggedIn, setLoggedIn] = React.useState(true); // false
   const [isLoading, setIsLoading] = React.useState(false); // false
-  const [readonly, setReadonly] = React.useState(false); // true
+  const [readonly, setReadonly] = React.useState(true); // true
   const [savedMovies, setSavedMovies] = React.useState(true); // false
   const [pageSavedMovies, setPageSavedMovies] = React.useState(false); // false
   const [isPopupMenuOpen, setIsPopupMenuOpen] = React.useState(false);

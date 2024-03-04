@@ -19,7 +19,7 @@ export default function Portfolio() {
           >
             Статичный сайт
             <img
-              className="portfolio__link portfolio__link-logo"
+              className="portfolio__link-logo"
               src={logo}
               alt="стрелка-ссылка"
             />
@@ -34,7 +34,7 @@ export default function Portfolio() {
           >
             Адаптивный сайт
             <img
-              className="portfolio__link portfolio__link-logo"
+              className="portfolio__link-logo"
               src={logo}
               alt="стрелка-ссылка"
             />
@@ -49,7 +49,7 @@ export default function Portfolio() {
           >
             Одностраничное приложение
             <img
-              className="portfolio__link portfolio__link-logo"
+              className="portfolio__link-logo"
               src={logo}
               alt="стрелка-ссылка"
             />
@@ -59,4 +59,3 @@ export default function Portfolio() {
     </section>
   );
 }
-

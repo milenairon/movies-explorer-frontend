@@ -18,7 +18,7 @@
 .promo__boxs {
   margin: 70px 0 0;
   display: flex;
-  gap: 40px;
+  gap: 52px;
 }
 
 .promo__box {
@@ -77,9 +77,8 @@
     padding: 90px 50px;
   }
   .promo__boxs {
-    gap: 30px;
+    gap: 38px;
   }
-
   .promo__box {
     gap: 22px;
   }

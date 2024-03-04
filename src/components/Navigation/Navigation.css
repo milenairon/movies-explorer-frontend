@@ -1,3 +1,7 @@
+.navigation {
+  margin-left: 60px;
+}
+
 .navigation__authorized-items {
   gap: 16px;
   display: flex;

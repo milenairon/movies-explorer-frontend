@@ -1,7 +1,7 @@
 .filter-checkbox {
   font-family: "Inter", Arial, Helvetica, sans-serif;
   background-color: #202020;
-  padding: 31px 0 40px;
+  padding: 29px 0 40px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -53,6 +53,12 @@ input:checked[type="checkbox"]:before {
   left: calc(34px - 10px - 2px);
   background: #fff;
 }
+
+/* ЭФФЕКТЫ ЭФФЕКТЫ ЭФФЕКТЫ */
+input:hover[type="checkbox"] {
+  opacity: 80%;
+}
+
 /*ШИРИНА ЭКРАНА 768px*/
 @media screen and (max-width: 1024px) {
   .filter-checkbox {

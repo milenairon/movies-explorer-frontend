@@ -52,6 +52,7 @@
   overflow: hidden; /* Обрезаем содержимое */
   text-overflow: ellipsis;
   padding: 15px;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
 }
 
 .login__button {
@@ -63,7 +64,7 @@
   background-color: #4285f4;
   border-radius: 3px;
   border: none;
-  padding: 13px 0;
+  padding: 14px 0;
   text-align: center;
   cursor: pointer;
 }

@@ -52,10 +52,11 @@
   overflow: hidden; /* Обрезаем содержимое */
   text-overflow: ellipsis;
   padding: 15px;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
 }
 
 .register__button {
-  margin: 101px 0 0;
+  margin: 91px 0 0;
   color: #ffffff;
   font-weight: 500;
   font-size: 14px;

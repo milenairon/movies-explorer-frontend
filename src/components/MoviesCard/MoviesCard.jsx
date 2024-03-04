@@ -52,7 +52,7 @@ export default function MoviesCard({
         </>
       )}
       <div className="movies-card__box">
-        <p className="movies-card__name">{name}</p>
+        <h2 className="movies-card__name">{name}</h2>
         <p className="movies-card__time">{time}</p>
       </div>
     </li>

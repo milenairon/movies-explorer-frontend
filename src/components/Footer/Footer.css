@@ -1,6 +1,9 @@
 .footer {
   font-family: "Inter", Arial, Helvetica, sans-serif;
   padding: 79px 70px 20px;
+  position: sticky;
+  bottom: 0;
+  background-color: #202020;
 }
 
 .footer__title {
@@ -29,6 +32,15 @@
   font-weight: 400;
   font-size: 13px;
   line-height: 16px;
+}
+
+.footer__link {
+  text-decoration: none;
+}
+
+/* ЭФФЕКТЫ ЭФФЕКТЫ ЭФФЕКТЫ */
+.footer__link:hover {
+  opacity: 70%;
 }
 
 /*ШИРИНА ЭКРАНА 768px*/

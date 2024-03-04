@@ -8,9 +8,7 @@ import popupCloseIcon from "../../images/popup__button-close.svg";
 export default function Popup({ name, onClose, isOpen }) {
   return (
     <div
-      className={`popup popup__container_place_${name} ${
-        !isOpen ? "" : "popup_opened"
-      }`}
+      className={`popup popup_place_${name} ${!isOpen ? "" : "popup_opened"}`}
     >
       <div className={`popup__container popup__container_place_${name}`}>
         <button

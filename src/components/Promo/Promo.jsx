@@ -9,14 +9,14 @@ export default function Promo() {
       <h2 className="promo__title">О проекте</h2>
       <div className="promo__boxs">
         <div className="promo__box">
-          <p className="promo__text">Дипломный проект включал 5 этапов</p>
+          <h3 className="promo__text">Дипломный проект включал 5 этапов</h3>
           <p className="promo__paragraph">
             Составление плана, работу над бэкендом, вёрстку, добавление
             функциональности и финальные доработки.
           </p>
         </div>
         <div className="promo__box">
-          <p className="promo__text">На выполнение диплома ушло 5 недель</p>
+          <h3 className="promo__text">На выполнение диплома ушло 5 недель</h3>
           <p className="promo__paragraph">
             У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было
             соблюдать, чтобы успешно защититься.

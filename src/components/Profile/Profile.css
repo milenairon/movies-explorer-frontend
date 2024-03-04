@@ -69,6 +69,7 @@
   white-space: nowrap; /* Отменяем перенос текста */
   overflow: hidden; /* Обрезаем содержимое */
   text-overflow: ellipsis;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
 }
 
 .profile__button {

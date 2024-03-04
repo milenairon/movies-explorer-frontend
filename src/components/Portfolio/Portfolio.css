@@ -1,7 +1,8 @@
 .portfolio {
-  margin: 100px 0 0;
+  margin: 101px 0 0;
   padding: 0 70px 125px;
   background-color: #202020;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
 }
 
 .portfolio__title {
@@ -46,7 +47,9 @@
 }
 
 .portfolio__link-logo {
-  width: 29px;
+  width: 18px;
+  margin-top: 7px;
+  margin-right: 5px;
   aspect-ratio: 29/60;
 }
 
@@ -72,7 +75,6 @@
     line-height: 50px;
   }
   .portfolio__link-logo {
-    width: 28px;
     aspect-ratio: 28/60;
   }
 }
@@ -94,7 +96,9 @@
     line-height: 28px;
   }
   .portfolio__link-logo {
-    width: 18px;
+    width: 10px;
+    margin-top: 1px;
+    margin-right: 4px;
     aspect-ratio: 18/28;
   }
 }

@@ -23,6 +23,9 @@
 
 .about-me__box-text {
   color: #ffffff;
+  height: 327px;
+  display: flex;
+  flex-direction: column;
 }
 
 .about-me__name {
@@ -39,7 +42,7 @@
   line-height: 20px;
 }
 .about-me__paragraph {
-  margin: 26px 0 99px;
+  margin: 26px 0 0;
   font-weight: 400;
   font-size: 14px;
   line-height: 22px;
@@ -51,6 +54,7 @@
   line-height: 17px;
   text-decoration: none;
   color: #ffffff;
+  margin-top: auto;
 }
 
 .about-me__photo {
@@ -75,6 +79,9 @@
     grid-template-columns: 364px minmax(255px, 0.7fr);
     margin: 66px 0 0;
   }
+  .about-me__box-text {
+    height: 307px;
+  }
   .about-me__name {
     font-size: 40px;
     line-height: 40px;
@@ -85,7 +92,7 @@
     line-height: 18px;
   }
   .about-me__paragraph {
-    margin: 20px 0 87px;
+    margin: 20px 0 0;
     font-size: 12px;
     line-height: 18px;
   }

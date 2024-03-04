@@ -19,7 +19,7 @@ export default function Profile({ name, loggedIn, readonly }) {
             minLength={2}
             maxLength={30}
             required={true}
-            placeholder={/*currentUser.name*/ "Виталий"}
+            placeholder="Имя"
             pattern="[A-Za-zА-Яа-яЁё\s-]+"
           />
         </label>
@@ -32,7 +32,7 @@ export default function Profile({ name, loggedIn, readonly }) {
             minLength={5}
             maxLength={40}
             required={true}
-            placeholder={/*currentUser.email*/ "какая-то-почта@mail.ru"}
+            placeholder="Почта"
             pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
           />
         </label>

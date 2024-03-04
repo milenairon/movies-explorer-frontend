@@ -25,6 +25,7 @@ export default function Register({
             maxLength={30}
             required={true}
             value={name}
+            placeholder="Имя"
             onChange={handleChangeInput}
             pattern="[A-Za-zА-Яа-яЁё\s-]+"
           />
@@ -41,6 +42,7 @@ export default function Register({
             maxLength={40}
             required={true}
             value={email}
+            placeholder="Почта"
             onChange={handleChangeInput}
             pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
           />
@@ -57,6 +59,7 @@ export default function Register({
             maxLength={10}
             required={true}
             value={password}
+            placeholder="Пароль"
             onChange={handleChangeInput}
           />
           <span className="register__input-error-message-live password-input-error-message register__input-error-message-live_visible"></span>

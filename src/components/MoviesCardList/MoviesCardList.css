@@ -6,7 +6,7 @@
 
 .movies-card-list__items {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 60px 30px;
 }
 
@@ -37,8 +37,7 @@
     padding: 80px 30px;
   }
   .movies-card-list__items {
-    grid-template-columns: repeat(auto-fill, minmax(339px, 1fr));
-    gap: 45px 30px;
+    gap: 47px 30px;
   }
   .movies-card-list__button {
     padding: 10px 60px;
@@ -52,8 +51,7 @@
     padding: 50px 10px 80px;
   }
   .movies-card-list__items {
-    grid-template-columns: 1fr;
-    gap: 36px;
+    gap: 39px;
   }
   .movies-card-list__button {
     padding: 10px 20px;

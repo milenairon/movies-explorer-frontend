@@ -18,12 +18,11 @@ export default function Login({ handleChangeInput, email, password }) {
             maxLength={40}
             required={true}
             value={email}
+            placeholder="Почта"
             onChange={handleChangeInput}
             pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
           />
-          <span className="login__input-error-message-live email-input-error-message register__input-error-message-live_visible">
-           
-          </span>
+          <span className="login__input-error-message-live email-input-error-message login__input-error-message-live_visible"></span>
         </label>
         <label className="login__label">
           <span className="login__input-name">Пароль</span>
@@ -35,11 +34,10 @@ export default function Login({ handleChangeInput, email, password }) {
             maxLength={10}
             required={true}
             value={password}
+            placeholder="Пароль"
             onChange={handleChangeInput}
           />
-          <span className="login__input-error-message-live password-input-error-message register__input-error-message-live_visible">
-      
-          </span>
+          <span className="login__input-error-message-live password-input-error-message login__input-error-message-live_visible"></span>
         </label>
         <button aria-label="Войти" className="login__button" type="submit">
           Войти

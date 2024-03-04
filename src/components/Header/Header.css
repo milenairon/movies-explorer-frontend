@@ -1,6 +1,8 @@
 .header {
   font-family: "Inter", Arial, Helvetica, sans-serif;
-  padding: 18px 70px 18px;
+  padding: 18px 70px;
+  height: 74px;
+  box-sizing: border-box;
 }
 
 .header__link-logo {
@@ -59,9 +61,11 @@
   display: block;
   width: 44px;
   height: 44px;
+  background-size: contain;
   background-color: #202020;
   border: none;
   cursor: pointer;
+  background-repeat: no-repeat;
 }
 
 /* ЭФФЕКТЫ ЭФФЕКТЫ ЭФФЕКТЫ */
@@ -74,7 +78,7 @@
 header
 header__navigation
 header__link-logo
-header__popup
+
 header__navigation
 header__link-logo
 header__navigation-unauthorized-items
@@ -82,7 +86,8 @@ header__link-register
 header__link-login*/
 @media screen and (max-width: 1024px) {
   .header {
-    padding: 18px 30px 18px;
+    padding: 18px 30px;
+    /* padding: 15px 30px; если попап есть*/
   }
 }
 
@@ -99,7 +104,7 @@ header__link-register
 header__link-login*/
 @media screen and (max-width: 540px) {
   .header {
-    padding: 18px 14px 18px;
+    padding: 15px 14px;
   }
   .header__navigation-unauthorized-items {
     gap: 14px;
@@ -113,6 +118,6 @@ header__link-login*/
   }
   .header__popup {
     width: 40px;
-    height: 40px;
+    height: 43px;
   }
 }

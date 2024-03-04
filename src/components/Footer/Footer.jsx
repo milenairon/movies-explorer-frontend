@@ -1,6 +1,7 @@
 // подвал.
 import React from "react";
 import "./Footer.css";
+import { NavLink } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -11,8 +12,22 @@ export default function Footer() {
       <div className="footer__container">
         <p className="footer__text footer__text_color_other">© 2024</p>
         <div className="footer__box">
-          <p className="footer__text">Яндекс.Практикум</p>
-          <p className="footer__text">Github</p>
+          <NavLink
+            to="https://practicum.yandex.ru/"
+            className="footer__text footer__link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Яндекс.Практикум
+          </NavLink>
+          <NavLink
+            to="https://github.com/"
+            className="footer__text footer__link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Github
+          </NavLink>
         </div>
       </div>
     </footer>
