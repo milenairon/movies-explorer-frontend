@@ -4,10 +4,15 @@ import React from "react";
 import "./Login.css";
 import { NavLink } from "react-router-dom";
 
-export default function Login({ handleChangeInput, email, password }) {
+export default function Login({
+  handleChangeInput,
+  onSubmit,
+  email,
+  password,
+}) {
   return (
     <main className="login">
-      <form name="formLogin" className="login__form">
+      <form name="formLogin" className="login__form" onSubmit={onSubmit}>
         <label className="login__label">
           <span className="login__input-name">E-mail</span>
           <input
@@ -20,7 +25,7 @@ export default function Login({ handleChangeInput, email, password }) {
             value={email}
             placeholder="Почта"
             onChange={handleChangeInput}
-            pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+            // pattern="[A-z0-9!#$%&'*+-/=?^_`{|]{1,64}@[A-z0-9-.]{2,253}\\.[A-z]{2,63}"
           />
           <span className="login__input-error-message-live email-input-error-message login__input-error-message-live_visible"></span>
         </label>

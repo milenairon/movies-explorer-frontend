@@ -27,7 +27,7 @@ export default function Register({
             value={name}
             placeholder="Имя"
             onChange={handleChangeInput}
-            pattern="[A-Za-zА-Яа-яЁё\s-]+"
+            // pattern="[A-Za-zА-Яа-яЁё\s-]+"
           />
           <span className="register__input-error-message-live name-input-error-message register__input-error-message-live_visible"></span>
         </label>
@@ -44,7 +44,7 @@ export default function Register({
             value={email}
             placeholder="Почта"
             onChange={handleChangeInput}
-            pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+            // pattern="[A-z0-9!#$%&'*+-/=?^_`{|]{1,64}@[A-z0-9-.]{2,253}\\.[A-z]{2,63}"
           />
           <span className="register__input-error-message-live email-input-error-message register__input-error-message-live_visible"></span>
         </label>

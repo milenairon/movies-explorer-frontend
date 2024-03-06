@@ -4,7 +4,7 @@ import React from "react";
 import "./Profile.css";
 // import { NavLink } from "react-router-dom";
 
-export default function Profile({ name, loggedIn, readonly }) {
+export default function Profile({ name, loggedIn, readonly, removeJwt }) {
   // const currentUser = useContext(CurrentUserContext);
   return (
     <main className="profile" id="profile">
@@ -33,7 +33,7 @@ export default function Profile({ name, loggedIn, readonly }) {
             maxLength={40}
             required={true}
             placeholder="Почта"
-            pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+            pattern="[A-z0-9!#$%&'*+-/=?^_`{|]{1,64}@[A-z0-9-.]{2,253}\\.[A-z]{2,63}"
           />
         </label>
         {loggedIn && readonly ? (
@@ -48,7 +48,8 @@ export default function Profile({ name, loggedIn, readonly }) {
             <button
               aria-label="Выйти из аккаунта"
               className="profile__button profile__button_color_main"
-              type="submit"
+              type="button"
+              onClick={removeJwt}
             >
               Выйти из аккаунта
             </button>

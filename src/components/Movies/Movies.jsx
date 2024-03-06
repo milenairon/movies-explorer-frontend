@@ -6,13 +6,13 @@ import SearchForm from "../SearchForm/SearchForm";
 import Preloader from "../Preloader/Preloader";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
-export default function Movies({ isLoading, savedMovies }) {
+export default function Movies({ isLoading, savedMovies, movies }) {
   return (
     <main className="movies">
       {!isLoading ? (
         <>
           <SearchForm />
-          <MoviesCardList savedMovies={savedMovies}/>
+          <MoviesCardList savedMovies={savedMovies} movies={movies}/>
         </>
       ) : (
         <Preloader />

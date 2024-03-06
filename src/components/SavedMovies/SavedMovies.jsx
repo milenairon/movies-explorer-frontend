@@ -5,13 +5,14 @@ import React from "react";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import SearchForm from "../SearchForm/SearchForm";
 
-export default function SavedMovies({ savedMovies, pageSavedMovies }) {
+export default function SavedMovies({ savedMovies, pageSavedMovies, movies }) {
   return (
     <div className="savedMovies">
       <SearchForm />
       <MoviesCardList
         savedMovies={savedMovies}
         pageSavedMovies={pageSavedMovies}
+        movies={movies}
       />
     </div>
   );
