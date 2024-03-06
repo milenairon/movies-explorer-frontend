@@ -1,7 +1,7 @@
 .footer {
   font-family: "Inter", Arial, Helvetica, sans-serif;
   padding: 79px 70px 20px;
-  position: sticky;
+  /* position: sticky; */
   bottom: 0;
   background-color: #202020;
 }
