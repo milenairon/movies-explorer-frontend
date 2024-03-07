@@ -1,6 +1,12 @@
 //React
 import React from "react";
-import { Routes, Route, /*Navigate ,*/ useNavigate } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 
 //блоки
 import "./App.css";
@@ -19,7 +25,7 @@ import PopupMenu from "../Popup/Popup";
 //Запросы
 import * as auth from "../../utils/auth";
 import mainApi from "../../utils/MainApi";
-import moviesApi from "../../utils/MoviesApi";
+// import moviesApi from "../../utils/MoviesApi";
 //прочее
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 // МАССИВ КАРТОЧЕК
@@ -31,7 +37,6 @@ function App() {
   // функциональность вся:
   const [loggedIn, setLoggedIn] = React.useState(false); // false
   const [isLoading, setIsLoading] = React.useState(false); // false
-  const [readonly, setReadonly] = React.useState(true); // true
   const [savedMovies, setSavedMovies] = React.useState(true); // false
   const [pageSavedMovies, setPageSavedMovies] = React.useState(false); // false
   const [isPopupMenuOpen, setIsPopupMenuOpen] = React.useState(false);
@@ -39,6 +44,9 @@ function App() {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = React.useState(null);
   const [movies, setMovies] = React.useState([]);
+  // const [inputEmail, setInputEmail] = React.useState(null);
+  // const [inputName, setInputName] = React.useState(null);
+  const location = useLocation();
 
   //ОТКРЫТЬ ПОПАПЫ
   function openPopupMenu() {
@@ -77,6 +85,38 @@ function App() {
     }
   }, [isSomePopupOpen]);
 
+  React.useEffect(() => {
+    tokenCheck();
+  }, []);
+
+  React.useEffect(() => {
+    if (loggedIn) {
+      // mainApi
+      //   .getSavedMovies()
+      //   .then((res) => {
+      //     setSavedMovies(res);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
+      mainApi
+        .getUserInfo()
+        .then((data) => {
+          setCurrentUser(data);
+        })
+        .catch((err) => {
+          console.error(`Данные пользователя не получены: ${err}`);
+        });
+      // if (JSON.parse(localStorage.getItem('filteredMovies'))) {
+      //   setMovies(JSON.parse(localStorage.getItem('filteredMovies')));
+      //   setChecked(JSON.parse(localStorage.getItem('checkbox')));
+      //   setCheckedSaveMovies(
+      //     JSON.parse(localStorage.getItem('checkboxSaveMovies'))
+      //   );
+      // }
+    }
+  }, [loggedIn]);
+
   const [formValue, setFormValue] = React.useState({
     name: "",
     email: "",
@@ -87,7 +127,7 @@ function App() {
   function handleLoggedInFalse() {
     setLoggedIn(false);
     localStorage.removeItem("jwt");
-    navigate("/signup");
+    navigate("/");
   }
 
   //ИЗМЕНЕНИЕ ИНПУТОВ
@@ -96,29 +136,44 @@ function App() {
     setFormValue({ ...formValue, [name]: value });
   }
 
-  // //ПРОВЕРКА ТОКЕНА (чтобы не входить, если не выходил из системы)
-  // function tokenCheck() {
-  //   // если у пользователя есть токен в localStorage,
-  //   // эта функция проверит валидность токена
-  //   const jwt = localStorage.getItem("jwt");
-  //   if (jwt) {
-  //     // проверим токен
-  //     return auth
-  //       .checkValidityToken(jwt)
-  //       .then((res) => {
-  //         if (res) {
-  //           // авторизуем пользователя
-  //           setLoggedIn(true);
-  //           // setEmailName(res.email);
-  //           navigate("/movies", { replace: true });
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         //если запрос не ушел
-  //         console.log(error);
-  //       });
-  //   }
-  // }
+  //Сохранить данные формы в профиле
+  function onUpdateUserInfo(name, email) {
+    mainApi
+      .updateUserInfo({ name, email })
+      .then((data) => {
+        setCurrentUser(data);
+      })
+      .catch((err) => {
+        if (err.status === 409) {
+          console.error("Пользователь с таким email уже существует.");
+        } else {
+          console.error("При обновлении профиля произошла ошибка.");
+        }
+      });
+  }
+
+  //ПРОВЕРКА ТОКЕНА (чтобы не входить, если не выходил из системы)
+  function tokenCheck() {
+    // если у пользователя есть токен в localStorage,
+    // эта функция проверит валидность токена
+    const jwt = localStorage.getItem("jwt");
+    if (jwt) {
+      // проверим токен
+      return auth
+        .checkValidityToken(jwt)
+        .then((res) => {
+          if (res) {
+            // авторизуем пользователя
+            setLoggedIn(true);
+            navigate(location.pathname);
+          }
+        })
+        .catch((error) => {
+          //если запрос не ушел
+          console.log(error);
+        });
+    }
+  }
 
   //РЕГИСТРАЦИЯ
   function handleSubmitRegister(e) {
@@ -149,7 +204,6 @@ function App() {
       .authorize(formValue.email, formValue.password)
       .then((res) => {
         if (res) {
-          // setEmailName(formValue.email); // поменять эмэйл на пришедший эмэйл на странице
           setLoggedIn(true);
           navigate("/movies", { replace: true });
           console.log("Вы успешно вошли на страницу!");
@@ -158,38 +212,47 @@ function App() {
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   }
-  // получение карточек и данных юзера
-  function getUsersAMovies() {
-    if (loggedIn) {
-      return Promise.all([
-        mainApi.getUserInfo(),
-        mainApi.getSavedMovies(),
-      ]).then(([user, moviesList]) => {
-        setCurrentUser(user);
-        console.log(user);
-        setMovies(moviesList);
-        console.log(moviesList);
-      });
-    }
-  }
 
-  async function EnterWithoutSign() {
-    try {
-      // await tokenCheck(); // токен
-      await getUsersAMovies(); // получение фильмов и данных юзера
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  // // получение карточек и данных юзера
+  // function getUsers() {
+  //   if (loggedIn) {
+  //     console.log(1);
+  //     mainApi
+  //       .getUserInfo()
+  //       .then(() => {
+  //         console.log(2);
+  //       })
+  //       .then((user) => {
+  //         console.log(1);
+  //         setCurrentUser(user);
+  //         console.log(user);
+  //       })
+  //       .catch((err) => {
+  //         console.error(`Данные пользователя не получены: ${err}`);
+  //       });
+  //   }
+  // }
 
-  React.useEffect(() => {
-    if (localStorage.getItem("jwt")) {
-      EnterWithoutSign();
-    }
-  }, [navigate]);
+  // mainApi.getSavedMovies(),
+  // setMovies(moviesList);
+  // console.log(moviesList);
+  // async function EnterWithoutSign() {
+  //   try {
+  //     await tokenCheck(); // токен
+  //     await getUsers(); // получение фильмов и данных юзера
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
+
+  // React.useEffect(() => {
+  //   if (localStorage.getItem("jwt")) {
+  //     EnterWithoutSign();
+  //   }
+  // }, [navigate]);
 
   // //вставить данные из формы
   // function handleUpdateUser({ name, about }) {
@@ -237,42 +300,63 @@ function App() {
             <Route
               path="/movies"
               element={
-                <>
-                  <Header loggedIn={loggedIn} isOpenPopupMenu={openPopupMenu} />
-                  <Movies
-                    isLoading={isLoading}
-                    savedMovies={savedMovies}
-                    movies={movies}
-                  />
-                  <Footer />
-                </>
+                loggedIn ? (
+                  <>
+                    <Header
+                      loggedIn={loggedIn}
+                      isOpenPopupMenu={openPopupMenu}
+                    />
+                    <Movies
+                      isLoading={isLoading}
+                      savedMovies={savedMovies}
+                      movies={movies}
+                    />
+                    <Footer />
+                  </>
+                ) : (
+                  <Navigate to="/" replace />
+                )
               }
             />
             <Route
               path="/saved-movies"
               element={
-                <>
-                  <Header loggedIn={loggedIn} isOpenPopupMenu={openPopupMenu} />
-                  <SavedMovies
-                    savedMovies={savedMovies}
-                    pageSavedMovies={pageSavedMovies}
-                    movies={movies}
-                  />
-                  <Footer />
-                </>
+                loggedIn ? (
+                  <>
+                    <Header
+                      loggedIn={loggedIn}
+                      isOpenPopupMenu={openPopupMenu}
+                    />
+                    <SavedMovies
+                      savedMovies={savedMovies}
+                      pageSavedMovies={pageSavedMovies}
+                      movies={movies}
+                    />
+                    <Footer />
+                  </>
+                ) : (
+                  <Navigate to="/" replace />
+                )
               }
             />
             <Route
               path="/profile"
               element={
-                <>
-                  <Header loggedIn={loggedIn} isOpenPopupMenu={openPopupMenu} />
-                  <Profile
-                    loggedIn={loggedIn}
-                    readonly={readonly}
-                    removeJwt={handleLoggedInFalse}
-                  />
-                </>
+                loggedIn ? (
+                  <>
+                    <Header
+                      loggedIn={loggedIn}
+                      isOpenPopupMenu={openPopupMenu}
+                    />
+                    <Profile
+                      loggedIn={loggedIn}
+                      removeJwt={handleLoggedInFalse}
+                      onUpdateUserInfo={onUpdateUserInfo}
+                    />
+                  </>
+                ) : (
+                  <Navigate to="/" replace />
+                )
               }
             />
             <Route

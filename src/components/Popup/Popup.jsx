@@ -54,7 +54,11 @@ export default function Popup({ name, onClose, isOpen }) {
             Сохранённые фильмы
           </NavLink>
         </div>
-        <NavLink to="/profile" className="popup__link-profile">
+        <NavLink
+          to="/profile"
+          className="popup__link-profile"
+          onClick={onClose}
+        >
           Аккаунт
         </NavLink>
       </div>

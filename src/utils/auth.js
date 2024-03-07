@@ -15,10 +15,10 @@ export const register = (name, email, password) => {
       if (res.status === 200 || res.status === 201) {
         return res.json();
       } else if (res.status === 400) {
-        console.log("При регистрации пользователя произошла ошибка");
+        console.error("При регистрации пользователя произошла ошибка");
         return Promise.reject(res.status);
       } else if (res.status === 409) {
-        console.log("Пользователь с таким email уже существует.");
+        console.error("Пользователь с таким email уже существует.");
         return Promise.reject(res.status);
       } else {
         return Promise.reject(res.status);
@@ -42,12 +42,10 @@ export const authorize = (email, password) => {
     .then((res) => {
       if (res.ok) {
         return res.json();
-      } else if (res.status === 400) {
-        console.log("Вы ввели неправильный логин или пароль. ");
       } else if (res.status === 401) {
-        console.log("Пользователь с email не найден"); // ТАКОЙ ОШИБКИ НЕТ
+        return Promise.reject("Вы ввели неправильный логин или пароль.");
       } else {
-        console.log(res);
+        return Promise.reject(res.status);
       }
     })
     .then((data) => {
@@ -109,3 +107,4 @@ export const checkValidityToken = (jwt) => {
 // Другое
 // 1. 500 На сервере произошла ошибка.
 // 2. 404 Страница по указанному маршруту не найдена.
+// обновляет информацию о пользователе (email и имя) '/users/me'

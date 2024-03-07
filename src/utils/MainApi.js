@@ -9,7 +9,7 @@ class MainApi {
         return res.json();
       }
       //если запрос ушел, но пришел ответ с ошибкой
-      return new Error("Что-то пошло не так");
+      return Promise.reject(res); // new Error("Что-то пошло не так");//
     });
   }
 
@@ -88,8 +88,7 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-  url: "http://localhost:3000", // "https://api.milenadiploma.nomoredomainswork.ru"
+  url: "http://localhost:3005", // "https://api.milenadiploma.nomoredomainswork.ru"
 });
 
 export default mainApi;
- 
