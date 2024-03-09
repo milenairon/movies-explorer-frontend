@@ -12,6 +12,11 @@
   display: block;
 }
 
+.movies-card__trailer-link {
+  width: 100%;
+  display: block;
+}
+
 .movies-card__box {
   display: flex;
   flex-direction: row;
@@ -100,17 +105,17 @@
 }
 
 /* ЭФФЕКТЫ ЭФФЕКТЫ ЭФФЕКТЫ */
-.movies-card__image:hover + .movies-card__button-delete {
+.movies-card__trailer-link:hover + .movies-card__button-delete {
   visibility: visible;
   opacity: 1;
 }
 
-.movies-card__image:hover + .movies-card__image-saved-movies {
+.movies-card__trailer-link:hover + .movies-card__image-saved-movies {
   visibility: visible;
   opacity: 1;
 }
 
-.movies-card__image:hover + .movies-card__button-unsave {
+.movies-card__trailer-link:hover + .movies-card__button-unsave {
   visibility: visible;
   opacity: 1;
 }

@@ -6,13 +6,25 @@ import SearchForm from "../SearchForm/SearchForm";
 import Preloader from "../Preloader/Preloader";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
-export default function Movies({ isLoading, savedMovies, movies }) {
+export default function Movies({
+  isLoading,
+  savedMovies,
+  movieList,
+  handleSubmitSearchForm,
+  buttonAddMovies,
+  setButtonAddMovies,
+}) {
   return (
     <main className="movies">
       {!isLoading ? (
         <>
-          <SearchForm />
-          <MoviesCardList savedMovies={savedMovies} movies={movies}/>
+          <SearchForm handleSubmitSearchForm={handleSubmitSearchForm} />
+          <MoviesCardList
+            savedMovies={savedMovies}
+            movieList={movieList}
+            buttonAddMovies={buttonAddMovies}
+            setButtonAddMovies={setButtonAddMovies}
+          />
         </>
       ) : (
         <Preloader />

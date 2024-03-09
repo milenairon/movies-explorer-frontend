@@ -3,34 +3,99 @@
 import React from "react";
 import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard";
+import { useLocation } from "react-router-dom";
 
 export default function MoviesCardList({
   savedMovies,
   pageSavedMovies,
-  movies,
+  movieList,
+  buttonAddMovies,
+  setButtonAddMovies,
 }) {
+  //количество показанных видео
+  const [sumMovies, setSumMovies] = React.useState(0);
+  // Ширина экрана
+  const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
+  // Смена страницы
+  const location = useLocation();
+  //количество добавленных видео
+  const [addedMovies, setAddedMovies] = React.useState(0);
+
+  // КОЛИЧЕСТВО ВИДЕО
+  React.useEffect(() => {
+    const handleResizeWindow = () => setWindowWidth(window.innerWidth);
+    if (windowWidth > 768) {
+      //1280px
+      let columMovies = 3;
+      let rowsMovies = 4;
+      setAddedMovies(3);
+      setSumMovies(columMovies * rowsMovies);
+    } else if (windowWidth > 480) {
+      //768
+      let columMovies = 2;
+      let rowsMovies = 4;
+      setAddedMovies(2);
+      setSumMovies(columMovies * rowsMovies);
+    } else if (windowWidth <= 480) {
+      //320px
+      let columMovies = 1;
+      let rowsMovies = 5;
+      setAddedMovies(2);
+      setSumMovies(columMovies * rowsMovies);
+    }
+    console.log();
+    window.addEventListener("resize", handleResizeWindow);
+    return () => {
+      // unsubscribe "onComponentDestroy"
+      window.removeEventListener("resize", handleResizeWindow);
+    };
+  }, [location, windowWidth]);
+
+  // добавить видео при нажатии на кнопку
+  function addMovies() {
+    setSumMovies(sumMovies + addedMovies);
+  }
+
+  // Убрать кнопку "Еще" если выложены уже все видео на странице
+  React.useEffect(() => {
+    if (sumMovies >= movieList.length) {
+      setButtonAddMovies(false);
+    }
+  }, [addMovies]);
+  ///////////////////////////////////////////////////////////////////////////
+
+  ////////////////////////////////////////////////////////////////
+
   return (
     <section className="movies-card-list">
       <ul className="movies-card-list__items">
-        {movies.map((movie) => {
+        {movieList.slice(0, sumMovies).map((movie) => {
           return (
             <MoviesCard
               savedMovies={savedMovies}
               pageSavedMovies={pageSavedMovies}
               key={movie.id}
-                  name={movie.nameRU}
-                  duration={movie.duration}
-                  trailerLink={movie.trailerLink}
-                  thumbnail={`https://api.nomoreparties.co/${movie.image.formats.thumbnail.url}`}
-                  // savedMovies={savedMovies}
-                  // onSave={onSave}
-                  // onDelete={onDelete}
-                  movie={movie}
+              name={movie.nameRU}
+              link={`https://api.nomoreparties.co/${movie.image.formats.thumbnail.url}`}
+              time={movie.duration}
+              // duration={movie.duration}
+              trailerLink={movie.trailerLink}
+              // thumbnail={`https://api.nomoreparties.co/${movie.image.formats.thumbnail.url}`}
+              // savedMovies={savedMovies}
+              // onSave={onSave}
+              // onDelete={onDelete}
+              // movie={movie}
             />
           );
         })}
       </ul>
-      <button className="movies-card-list__button">Ещё</button>
+      {!buttonAddMovies ? (
+        ""
+      ) : (
+        <button className="movies-card-list__button" onClick={addMovies}>
+          Ещё
+        </button>
+      )}
     </section>
   );
 }

@@ -25,7 +25,7 @@ import PopupMenu from "../Popup/Popup";
 //Запросы
 import * as auth from "../../utils/auth";
 import mainApi from "../../utils/MainApi";
-// import moviesApi from "../../utils/MoviesApi";
+import moviesApi from "../../utils/MoviesApi";
 //прочее
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 // МАССИВ КАРТОЧЕК
@@ -47,7 +47,7 @@ function App() {
   // const [inputEmail, setInputEmail] = React.useState(null);
   // const [inputName, setInputName] = React.useState(null);
   const location = useLocation();
-
+  const [buttonAddMovies, setButtonAddMovies] = React.useState(false);
   //ОТКРЫТЬ ПОПАПЫ
   function openPopupMenu() {
     setIsPopupMenuOpen(true);
@@ -170,7 +170,7 @@ function App() {
         })
         .catch((error) => {
           //если запрос не ушел
-          console.log(error);
+          console.error(error);
         });
     }
   }
@@ -189,7 +189,7 @@ function App() {
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   }
 
@@ -198,7 +198,6 @@ function App() {
     e.preventDefault();
     onLogin();
   }
-
   function onLogin() {
     auth
       .authorize(formValue.email, formValue.password)
@@ -216,71 +215,30 @@ function App() {
       });
   }
 
-  // // получение карточек и данных юзера
-  // function getUsers() {
-  //   if (loggedIn) {
-  //     console.log(1);
-  //     mainApi
-  //       .getUserInfo()
-  //       .then(() => {
-  //         console.log(2);
-  //       })
-  //       .then((user) => {
-  //         console.log(1);
-  //         setCurrentUser(user);
-  //         console.log(user);
-  //       })
-  //       .catch((err) => {
-  //         console.error(`Данные пользователя не получены: ${err}`);
-  //       });
-  //   }
-  // }
-
-  // mainApi.getSavedMovies(),
-  // setMovies(moviesList);
-  // console.log(moviesList);
-  // async function EnterWithoutSign() {
-  //   try {
-  //     await tokenCheck(); // токен
-  //     await getUsers(); // получение фильмов и данных юзера
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
-
-  // React.useEffect(() => {
-  //   if (localStorage.getItem("jwt")) {
-  //     EnterWithoutSign();
-  //   }
-  // }, [navigate]);
-
-  // //вставить данные из формы
-  // function handleUpdateUser({ name, about }) {
-  //   api
-  //     .setUserInfo({ name, job: about })
-  //     .then((user) => {
-  //       setCurrentUser(user);
-  //       closeAllPopups();
-  //     })
-  //     .catch((error) => {
-  //       //если запрос не ушел
-  //       console.log(error);
-  //     });
-  // }
-
-  // //поменять картинку аватара
-  // function handleUpdateAvatar(avatar) {
-  //   api
-  //     .setUserAvatar(avatar)
-  //     .then((user) => {
-  //       setCurrentUser(user);
-  //       closeAllPopups();
-  //     })
-  //     .catch((error) => {
-  //       //если запрос не ушел
-  //       console.log(error);
-  //     });
-  // }
+  // ПОЛУЧИТЬ МАССИВ КАРТОЧЕК на страницу "/movies"
+  function getAllMovies() {
+    if (!localStorage.getItem("movies")) {
+      moviesApi
+        .getAllMovies()
+        .then((movies) => {
+          localStorage.setItem("movies", JSON.stringify(movies));
+        })
+        .then(() => {
+          setMovies(JSON.parse(localStorage.getItem("movies")));
+          setButtonAddMovies(true);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else {
+      setMovies(JSON.parse(localStorage.getItem("movies")));
+      setButtonAddMovies(true);
+    }
+  }
+  function handleSubmitSearchForm(e) {
+    e.preventDefault();
+    getAllMovies();
+  }
 
   return (
     <div className="app">
@@ -309,7 +267,10 @@ function App() {
                     <Movies
                       isLoading={isLoading}
                       savedMovies={savedMovies}
-                      movies={movies}
+                      movieList={movies}
+                      handleSubmitSearchForm={handleSubmitSearchForm}
+                      buttonAddMovies={buttonAddMovies}
+                      setButtonAddMovies={setButtonAddMovies}
                     />
                     <Footer />
                   </>
@@ -330,7 +291,7 @@ function App() {
                     <SavedMovies
                       savedMovies={savedMovies}
                       pageSavedMovies={pageSavedMovies}
-                      movies={movies}
+                      movieList={movies}
                     />
                     <Footer />
                   </>

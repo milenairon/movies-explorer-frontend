@@ -5,6 +5,7 @@ class MoviesApi {
   }
   _sendRequest(url, options) {
     return fetch(url, options).then((res) => {
+      console.log(res);
       if (res.ok) {
         return res.json();
       }
@@ -12,7 +13,7 @@ class MoviesApi {
       return new Error("Что-то пошло не так");
     });
   }
-  
+
   // возвращает все фильмы
   getAllMovies() {
     return this._sendRequest(`${this._url}`, {
@@ -30,4 +31,3 @@ const moviesApi = new MoviesApi({
 });
 
 export default moviesApi;
- 

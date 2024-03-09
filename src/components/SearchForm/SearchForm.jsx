@@ -3,10 +3,14 @@ import React from "react";
 import "./SearchForm.css";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
-export default function SearchForm() {
+export default function SearchForm({ handleSubmitSearchForm }) {
   return (
     <section className="search-form">
-      <form name="formSearch" className="search-form__form">
+      <form
+        name="formSearch"
+        className="search-form__form"
+        onSubmit={handleSubmitSearchForm}
+      >
         <div className="search-form__box">
           <input
             className="search-form__input"
