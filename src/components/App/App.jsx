@@ -30,13 +30,11 @@ import moviesApi from "../../utils/MoviesApi";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 // import ProtectedRouteElement from "../ProtectedRoute/ProtectedRoute"
 
-
 function App() {
   // функциональность вся:
   const [loggedIn, setLoggedIn] = React.useState(false); // false
   const [isLoading, setIsLoading] = React.useState(false); // false
   const [savedMovies, setSavedMovies] = React.useState([]); // массив сохраненных фильмов
-  const [onSavedMovies, setOnSavedMovies] = React.useState(false); //Фильм сохранен?  // false
   const [isPopupMenuOpen, setIsPopupMenuOpen] = React.useState(false);
   const isSomePopupOpen = isPopupMenuOpen; // + "|| другой попап || еще другой попап"
   const navigate = useNavigate();
@@ -217,7 +215,7 @@ function App() {
       });
   }
 
-// Получить все карточки со стороннего сайта
+  // Получить все карточки со стороннего сайта
   React.useEffect(() => {
     if (!localStorage.getItem("movies")) {
       moviesApi
@@ -246,18 +244,17 @@ function App() {
   // ДЕЙСТВИЯ С ФИЛЬМАМИ
   //СОХРАНИТЬ ФИЛЬМ
   function handleSaveMovies(movie) {
-    if (!onSavedMovies) {
-      mainApi
-        .addMovie(movie)
-        .then((data) => {
-          setSavedMovies([data, ...savedMovies]);
-          console.log("Фильм сохранен!");
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    }
+    mainApi
+      .addMovie(movie)
+      .then((data) => {
+        setSavedMovies([data, ...savedMovies]);
+        console.log("Фильм сохранен!");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
+  // }
 
   //УДАЛИТЬ ФИЛЬМ
   function handleDeleteMovies(movie) {
@@ -307,8 +304,6 @@ function App() {
                       buttonAddMovies={buttonAddMovies}
                       setButtonAddMovies={setButtonAddMovies}
                       onSave={handleSaveMovies}
-                      // setOnSavedMovie={handleSetOnSavedMovie}
-                      // getOnSavedMovie={getOnSavedMovie}
                     />
                     <Footer />
                   </>
@@ -335,7 +330,6 @@ function App() {
                       buttonAddMovies={buttonAddMovies}
                       setButtonAddMovies={setButtonAddMovies}
                       onSave={handleSaveMovies}
-                      onSavedMovies={onSavedMovies}
                     />
                     <Footer />
                   </>

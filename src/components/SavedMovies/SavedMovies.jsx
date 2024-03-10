@@ -15,7 +15,6 @@ export default function SavedMovies({
   buttonAddMovies,
   setButtonAddMovies,
   onSave,
-  onSavedMovies,
 }) {
   return (
     <div className="savedMovies">
@@ -29,7 +28,6 @@ export default function SavedMovies({
             buttonAddMovies={buttonAddMovies}
             setButtonAddMovies={setButtonAddMovies}
             onSave={onSave}
-            onSavedMovies={onSavedMovies}
           />
         </>
       ) : (
