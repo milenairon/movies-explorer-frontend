@@ -6,11 +6,12 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import { useLocation } from "react-router-dom";
 
 export default function MoviesCardList({
-  savedMovies,
-  pageSavedMovies,
+  onDelete,
   movieList,
+  savedMovieList,
   buttonAddMovies,
   setButtonAddMovies,
+  onSave,
 }) {
   //количество показанных видео
   const [sumMovies, setSumMovies] = React.useState(0);
@@ -62,36 +63,51 @@ export default function MoviesCardList({
       setButtonAddMovies(false);
     }
   }, [addMovies]);
-  ///////////////////////////////////////////////////////////////////////////
-
-  ////////////////////////////////////////////////////////////////
+ 
 
   return (
     <section className="movies-card-list">
       <ul className="movies-card-list__items">
-        {movieList.slice(0, sumMovies).map((movie) => {
-          return (
-            <MoviesCard
-              savedMovies={savedMovies}
-              pageSavedMovies={pageSavedMovies}
-              key={movie.id}
-              name={movie.nameRU}
-              link={`https://api.nomoreparties.co/${movie.image.formats.thumbnail.url}`}
-              time={movie.duration}
-              // duration={movie.duration}
-              trailerLink={movie.trailerLink}
-              // thumbnail={`https://api.nomoreparties.co/${movie.image.formats.thumbnail.url}`}
-              // savedMovies={savedMovies}
-              // onSave={onSave}
-              // onDelete={onDelete}
-              // movie={movie}
-            />
-          );
-        })}
+        {location.pathname === "/movies" && (
+          <>
+            {movieList.slice(0, sumMovies).map((movie) => {
+              return (
+                <MoviesCard
+                  movie={movie}
+                  onDelete={onDelete}
+                  key={movie.id}
+                  name={movie.nameRU}
+                  thumbnail={`https://api.nomoreparties.co/${movie.image.formats.thumbnail.url}`}
+                  time={movie.duration}
+                  trailerLink={movie.trailerLink}
+                  onSave={onSave}
+                  savedMovieList={savedMovieList}
+                />
+              );
+            })}
+          </>
+        )}
+        {location.pathname === "/saved-movies" && (
+          <>
+            {savedMovieList.slice(0, sumMovies).map((movie) => {
+              return (
+                <MoviesCard
+                  movie={movie}
+                  onDelete={onDelete}
+                  key={movie._id}
+                  name={movie.nameRU}
+                  thumbnail={movie.thumbnail}
+                  time={movie.duration}
+                  trailerLink={movie.trailerLink}
+                  onSave={onSave}
+                  savedMovieList={savedMovieList}
+                />
+              );
+            })}
+          </>
+        )}
       </ul>
-      {!buttonAddMovies ? (
-        ""
-      ) : (
+      {buttonAddMovies && location.pathname === "/movies" && (
         <button className="movies-card-list__button" onClick={addMovies}>
           Ещё
         </button>

@@ -84,8 +84,8 @@
   position: absolute;
   top: 14px;
   right: 14px;
-  visibility: hidden;
-  opacity: 0;
+  visibility: 1;
+  opacity: 1;
 }
 /* Кнопка удаления фильма из охраненных */
 .movies-card__button-delete {
@@ -110,11 +110,6 @@
   opacity: 1;
 }
 
-.movies-card__trailer-link:hover + .movies-card__image-saved-movies {
-  visibility: visible;
-  opacity: 1;
-}
-
 .movies-card__trailer-link:hover + .movies-card__button-unsave {
   visibility: visible;
   opacity: 1;
@@ -124,11 +119,6 @@
   visibility: visible;
   opacity: 1;
   cursor: pointer;
-}
-
-.movies-card__image-saved-movies:hover {
-  visibility: visible;
-  opacity: 1;
 }
 
 .movies-card__button-unsave:hover {

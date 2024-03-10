@@ -8,11 +8,15 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
 export default function Movies({
   isLoading,
-  savedMovies,
+  onDelete,
   movieList,
+  savedMovieList,
   handleSubmitSearchForm,
   buttonAddMovies,
   setButtonAddMovies,
+  onSave,
+  setOnSavedMovie,
+  getOnSavedMovie,
 }) {
   return (
     <main className="movies">
@@ -20,10 +24,14 @@ export default function Movies({
         <>
           <SearchForm handleSubmitSearchForm={handleSubmitSearchForm} />
           <MoviesCardList
-            savedMovies={savedMovies}
+            onDelete={onDelete}
             movieList={movieList}
+            savedMovieList={savedMovieList}
             buttonAddMovies={buttonAddMovies}
             setButtonAddMovies={setButtonAddMovies}
+            onSave={onSave}
+            setOnSavedMovie={setOnSavedMovie}
+            getOnSavedMovie={getOnSavedMovie}
           />
         </>
       ) : (

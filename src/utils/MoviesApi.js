@@ -5,7 +5,6 @@ class MoviesApi {
   }
   _sendRequest(url, options) {
     return fetch(url, options).then((res) => {
-      console.log(res);
       if (res.ok) {
         return res.json();
       }
@@ -19,7 +18,7 @@ class MoviesApi {
     return this._sendRequest(`${this._url}`, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("jwt")}`, // НУЖНО ЛИ ПРОВЕРЯТЬ jwt ????????????????????????????
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
         "Content-Type": "application/json",
       },
     });

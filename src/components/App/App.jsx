@@ -28,24 +28,20 @@ import mainApi from "../../utils/MainApi";
 import moviesApi from "../../utils/MoviesApi";
 //прочее
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-// МАССИВ КАРТОЧЕК
-// карточки как массив спускаются пропсом в конкретные компоненты и отрисовываются
-// при изменении состава массива (добавили лайкнутую карточку/удалили карточку) нужно пересобрать массив и обновить стейт
-// - когда стейт обновится он так же отправится "вниз" по дереву компонентов и будет отрисован
+// import ProtectedRouteElement from "../ProtectedRoute/ProtectedRoute"
+
 
 function App() {
   // функциональность вся:
   const [loggedIn, setLoggedIn] = React.useState(false); // false
   const [isLoading, setIsLoading] = React.useState(false); // false
-  const [savedMovies, setSavedMovies] = React.useState(true); // false
-  const [pageSavedMovies, setPageSavedMovies] = React.useState(false); // false
+  const [savedMovies, setSavedMovies] = React.useState([]); // массив сохраненных фильмов
+  const [onSavedMovies, setOnSavedMovies] = React.useState(false); //Фильм сохранен?  // false
   const [isPopupMenuOpen, setIsPopupMenuOpen] = React.useState(false);
   const isSomePopupOpen = isPopupMenuOpen; // + "|| другой попап || еще другой попап"
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = React.useState(null);
   const [movies, setMovies] = React.useState([]);
-  // const [inputEmail, setInputEmail] = React.useState(null);
-  // const [inputName, setInputName] = React.useState(null);
   const location = useLocation();
   const [buttonAddMovies, setButtonAddMovies] = React.useState(false);
   //ОТКРЫТЬ ПОПАПЫ
@@ -89,16 +85,21 @@ function App() {
     tokenCheck();
   }, []);
 
+  //ПОЛУЧИТЬ В САХРАНЕННЫЕ ФИЛЬМЫ
+  async function getSavedMovies() {
+    try {
+      const res = await mainApi.getSavedMovies();
+      const data = await res;
+      setSavedMovies(data);
+    } catch (err) {
+      console.error(
+        `Что-то пошло не так при получении сохраненных карточек: ${err}`
+      );
+    }
+  }
+
   React.useEffect(() => {
     if (loggedIn) {
-      // mainApi
-      //   .getSavedMovies()
-      //   .then((res) => {
-      //     setSavedMovies(res);
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
       mainApi
         .getUserInfo()
         .then((data) => {
@@ -107,6 +108,7 @@ function App() {
         .catch((err) => {
           console.error(`Данные пользователя не получены: ${err}`);
         });
+      getSavedMovies();
       // if (JSON.parse(localStorage.getItem('filteredMovies'))) {
       //   setMovies(JSON.parse(localStorage.getItem('filteredMovies')));
       //   setChecked(JSON.parse(localStorage.getItem('checkbox')));
@@ -215,8 +217,8 @@ function App() {
       });
   }
 
-  // ПОЛУЧИТЬ МАССИВ КАРТОЧЕК на страницу "/movies"
-  function getAllMovies() {
+// Получить все карточки со стороннего сайта
+  React.useEffect(() => {
     if (!localStorage.getItem("movies")) {
       moviesApi
         .getAllMovies()
@@ -230,14 +232,46 @@ function App() {
         .catch((err) => {
           console.error(err);
         });
-    } else {
-      setMovies(JSON.parse(localStorage.getItem("movies")));
-      setButtonAddMovies(true);
     }
+  }, []);
+  function getAllMovies() {
+    setMovies(JSON.parse(localStorage.getItem("movies")));
+    setButtonAddMovies(true);
   }
   function handleSubmitSearchForm(e) {
     e.preventDefault();
     getAllMovies();
+  }
+
+  // ДЕЙСТВИЯ С ФИЛЬМАМИ
+  //СОХРАНИТЬ ФИЛЬМ
+  function handleSaveMovies(movie) {
+    if (!onSavedMovies) {
+      mainApi
+        .addMovie(movie)
+        .then((data) => {
+          setSavedMovies([data, ...savedMovies]);
+          console.log("Фильм сохранен!");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  }
+
+  //УДАЛИТЬ ФИЛЬМ
+  function handleDeleteMovies(movie) {
+    mainApi
+      .deleteMovie(movie._id)
+      .then(() => {
+        setSavedMovies((movies) =>
+          movies.filter((savedMovie) => movie._id !== savedMovie._id)
+        );
+        // setOnSavedMovies(false);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   return (
@@ -266,11 +300,15 @@ function App() {
                     />
                     <Movies
                       isLoading={isLoading}
-                      savedMovies={savedMovies}
+                      onDelete={handleDeleteMovies}
                       movieList={movies}
+                      savedMovieList={savedMovies}
                       handleSubmitSearchForm={handleSubmitSearchForm}
                       buttonAddMovies={buttonAddMovies}
                       setButtonAddMovies={setButtonAddMovies}
+                      onSave={handleSaveMovies}
+                      // setOnSavedMovie={handleSetOnSavedMovie}
+                      // getOnSavedMovie={getOnSavedMovie}
                     />
                     <Footer />
                   </>
@@ -289,9 +327,15 @@ function App() {
                       isOpenPopupMenu={openPopupMenu}
                     />
                     <SavedMovies
-                      savedMovies={savedMovies}
-                      pageSavedMovies={pageSavedMovies}
+                      isLoading={isLoading}
+                      onDelete={handleDeleteMovies}
                       movieList={movies}
+                      savedMovieList={savedMovies}
+                      handleSubmitSearchForm={handleSubmitSearchForm}
+                      buttonAddMovies={buttonAddMovies}
+                      setButtonAddMovies={setButtonAddMovies}
+                      onSave={handleSaveMovies}
+                      onSavedMovies={onSavedMovies}
                     />
                     <Footer />
                   </>

@@ -4,20 +4,37 @@ import React from "react";
 // import "./SavedMovies.css";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import SearchForm from "../SearchForm/SearchForm";
+import Preloader from "../Preloader/Preloader";
 
 export default function SavedMovies({
-  savedMovies,
-  pageSavedMovies,
+  isLoading,
+  onDelete,
   movieList,
+  savedMovieList,
+  handleSubmitSearchForm,
+  buttonAddMovies,
+  setButtonAddMovies,
+  onSave,
+  onSavedMovies,
 }) {
   return (
     <div className="savedMovies">
-      <SearchForm />
-      <MoviesCardList
-        savedMovies={savedMovies}
-        pageSavedMovies={pageSavedMovies}
-        movieList={movieList}
-      />
+      {!isLoading ? (
+        <>
+          <SearchForm handleSubmitSearchForm={handleSubmitSearchForm} />
+          <MoviesCardList
+            onDelete={onDelete}
+            movieList={movieList}
+            savedMovieList={savedMovieList}
+            buttonAddMovies={buttonAddMovies}
+            setButtonAddMovies={setButtonAddMovies}
+            onSave={onSave}
+            onSavedMovies={onSavedMovies}
+          />
+        </>
+      ) : (
+        <Preloader />
+      )}
     </div>
   );
 }
