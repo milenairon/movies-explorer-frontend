@@ -7,6 +7,7 @@
   background-repeat: no-repeat;
   object-fit: cover;
   width: 100%;
+  aspect-ratio: 360/201;
   border-radius: 5px;
   cursor: pointer;
   display: block;
@@ -133,6 +134,9 @@
     margin: 25px 0 0;
     padding: 0;
   }
+  .movies-card__image {
+    aspect-ratio: 339/190;
+  }
 }
 
 /*ШИРИНА ЭКРАНА 320px*/
@@ -143,6 +147,9 @@
   .movies-card__name {
     font-size: 12px;
     line-height: 15px;
+  }
+  .movies-card__image {
+    aspect-ratio: 300/168;
   }
   .movies-card__button-unsave,
   .movies-card__button-delete,
