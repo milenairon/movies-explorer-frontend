@@ -9,9 +9,14 @@ export default function MoviesCardList({
   onDelete,
   movieList,
   savedMovieList,
+  savedMoviesFilter,
   buttonAddMovies,
   setButtonAddMovies,
   onSave,
+  arrMovies,
+  arrSavedMovies,
+  errorTextMovies,
+  errorTextSavedMovies
 }) {
   //количество показанных видео
   const [sumMovies, setSumMovies] = React.useState(0);
@@ -63,47 +68,78 @@ export default function MoviesCardList({
       setButtonAddMovies(false);
     }
   }, [addMovies]);
- 
 
   return (
     <section className="movies-card-list">
       <ul className="movies-card-list__items">
         {location.pathname === "/movies" && (
           <>
-            {movieList.slice(0, sumMovies).map((movie) => {
-              return (
-                <MoviesCard
-                  movie={movie}
-                  onDelete={onDelete}
-                  key={movie.id}
-                  name={movie.nameRU}
-                  thumbnail={`https://api.nomoreparties.co/${movie.image.formats.thumbnail.url}`}
-                  time={movie.duration}
-                  trailerLink={movie.trailerLink}
-                  onSave={onSave}
-                  savedMovieList={savedMovieList}
-                />
-              );
-            })}
+            {!arrMovies ? (
+              <>
+                {errorTextMovies ? (
+                  <p className="movies-card-list__title">
+                    Во время запроса произошла ошибка. Возможно, проблема с
+                    соединением или сервер недоступен. Подождите немного и
+                    попробуйте ещё раз
+                  </p>
+                ) : (
+                  <h2 className="movies-card-list__title">Ничего не найдено</h2>
+                )}
+              </>
+            ) : (
+              <>
+                {movieList.slice(0, sumMovies).map((movie) => {
+                  return (
+                    <MoviesCard
+                      movie={movie}
+                      onDelete={onDelete}
+                      key={movie.id}
+                      name={movie.nameRU}
+                      thumbnail={`https://api.nomoreparties.co/${movie.image.formats.thumbnail.url}`}
+                      time={movie.duration}
+                      trailerLink={movie.trailerLink}
+                      onSave={onSave}
+                      savedMovieList={savedMovieList}
+                    />
+                  );
+                })}
+              </>
+            )}
           </>
         )}
         {location.pathname === "/saved-movies" && (
           <>
-            {savedMovieList.slice(0, sumMovies).map((movie) => {
-              return (
-                <MoviesCard
-                  movie={movie}
-                  onDelete={onDelete}
-                  key={movie._id}
-                  name={movie.nameRU}
-                  thumbnail={movie.thumbnail}
-                  time={movie.duration}
-                  trailerLink={movie.trailerLink}
-                  onSave={onSave}
-                  savedMovieList={savedMovieList}
-                />
-              );
-            })}
+            {!arrSavedMovies ? (
+              <>
+                {errorTextSavedMovies ? (
+                  <p className="movies-card-list__title">
+                    Во время запроса произошла ошибка. Возможно, проблема с
+                    соединением или сервер недоступен. Подождите немного и
+                    попробуйте ещё раз
+                  </p>
+                ) : (
+                  <h2 className="movies-card-list__title">Ничего не найдено</h2>
+                )}
+              </>
+            ) : (
+              <>
+                {savedMoviesFilter.slice(0, sumMovies).map((movie) => {
+                  return (
+                    <MoviesCard
+                      movie={movie}
+                      onDelete={onDelete}
+                      key={movie._id}
+                      name={movie.nameRU}
+                      thumbnail={movie.thumbnail}
+                      time={movie.duration}
+                      trailerLink={movie.trailerLink}
+                      onSave={onSave}
+                      savedMovieList={savedMovieList}
+                    />
+                  );
+                })}
+              </>
+            )}
           </>
         )}
       </ul>

@@ -11,27 +11,48 @@ export default function Movies({
   onDelete,
   movieList,
   savedMovieList,
+  savedMoviesFilter,
   handleSubmitSearchForm,
   buttonAddMovies,
   setButtonAddMovies,
   onSave,
-  setOnSavedMovie,
-  getOnSavedMovie,
+  searchBar,
+  handleChangeInput,
+  arrMovies,
+  arrSavedMovies,
+  onChecked,
+  handleChangeCheckbox,
+  errorTextMovies,
+  errorTextSavedMovies,
+  onCheckedSaved,
+  handleChangeCheckboxSaved
 }) {
   return (
     <main className="movies">
       {!isLoading ? (
         <>
-          <SearchForm handleSubmitSearchForm={handleSubmitSearchForm} />
+          <SearchForm
+            handleSubmitSearchForm={handleSubmitSearchForm}
+            searchBar={searchBar}
+            handleChangeInput={handleChangeInput}
+            onChecked={onChecked}
+            handleChangeCheckbox={handleChangeCheckbox}
+            onCheckedSaved={onCheckedSaved}
+          handleChangeCheckboxSaved={handleChangeCheckboxSaved}
+          />
           <MoviesCardList
             onDelete={onDelete}
             movieList={movieList}
             savedMovieList={savedMovieList}
+            savedMoviesFilter={savedMoviesFilter}
             buttonAddMovies={buttonAddMovies}
             setButtonAddMovies={setButtonAddMovies}
             onSave={onSave}
-            setOnSavedMovie={setOnSavedMovie}
-            getOnSavedMovie={getOnSavedMovie}
+            arrMovies={arrMovies}
+            arrSavedMovies={arrSavedMovies}
+            errorTextMovies={errorTextMovies}
+            errorTextSavedMovies={errorTextSavedMovies}
+            
           />
         </>
       ) : (

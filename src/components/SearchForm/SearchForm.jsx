@@ -3,7 +3,15 @@ import React from "react";
 import "./SearchForm.css";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
-export default function SearchForm({ handleSubmitSearchForm }) {
+export default function SearchForm({
+  handleSubmitSearchForm,
+  searchBar,
+  handleChangeInput,
+  onChecked,
+  handleChangeCheckbox,
+  onCheckedSaved,
+  handleChangeCheckboxSaved
+}) {
   return (
     <section className="search-form">
       <form
@@ -18,10 +26,17 @@ export default function SearchForm({ handleSubmitSearchForm }) {
             placeholder="Фильм"
             minLength="1"
             name="film"
+            value={searchBar}
+            onChange={handleChangeInput}
           />
           <button className="search-form__button" type="submit" />
         </div>
-        <FilterCheckbox />
+        <FilterCheckbox
+          onChecked={onChecked}
+          handleChangeCheckbox={handleChangeCheckbox}
+          onCheckedSaved={onCheckedSaved}
+          handleChangeCheckboxSaved={handleChangeCheckboxSaved}
+        />
       </form>
     </section>
   );

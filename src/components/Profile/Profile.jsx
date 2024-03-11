@@ -48,10 +48,6 @@ export default function Profile({ loggedIn, removeJwt, onUpdateUserInfo }) {
     }
   }
 
-  // function resetForm() {
-  //   setEmail(currentUser.email);
-  // }
-
   // вставить в инпуты значение
   React.useEffect(() => {
     if (currentUser) {
