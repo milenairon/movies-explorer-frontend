@@ -10,7 +10,8 @@ export default function SearchForm({
   onChecked,
   handleChangeCheckbox,
   onCheckedSaved,
-  handleChangeCheckboxSaved
+  handleChangeCheckboxSaved,
+  isValidSearch,
 }) {
   return (
     <section className="search-form">
@@ -18,6 +19,7 @@ export default function SearchForm({
         name="formSearch"
         className="search-form__form"
         onSubmit={handleSubmitSearchForm}
+        noValidate
       >
         <div className="search-form__box">
           <input
@@ -31,6 +33,13 @@ export default function SearchForm({
           />
           <button className="search-form__button" type="submit" />
         </div>
+        {isValidSearch ? (
+          <></>
+        ) : (
+          <span className="search-form__error">
+            Нужно ввести ключевое слово
+          </span>
+        )}
         <FilterCheckbox
           onChecked={onChecked}
           handleChangeCheckbox={handleChangeCheckbox}

@@ -46,6 +46,7 @@ function App() {
   const [buttonAddMovies, setButtonAddMovies] = React.useState(false);
   const [errorTextMovies, setErrorTextMovies] = React.useState(false);
   const [errorTextSavedMovies, setErrorTextSavedMovies] = React.useState(false);
+  const [isValidSearch, setIsValidSearch] = React.useState(true);
   //Изменение инпутов
   const [formValue, setFormValue] = React.useState({
     name: "",
@@ -77,9 +78,11 @@ function App() {
 
   //ИЗМЕНЕНИЕ ЧЕКБОКСА
   function handleChangeCheckbox() {
-    setCheckbox(!checkbox);
-    localStorage.setItem("filter-checkbox", checkbox);
-    getMovies();
+    if (isValidSearch) {
+      setCheckbox(!checkbox);
+      localStorage.setItem("filter-checkbox", checkbox);
+      getMovies();
+    }
   }
   function handleChangeCheckboxSaved() {
     setCheckboxSaved(!checkboxSaved);
@@ -132,7 +135,7 @@ function App() {
       if (localStorage.getItem("filter-request-text")) {
         setSearchFormValue(localStorage.getItem("filter-request-text"));
         setMovies(JSON.parse(localStorage.getItem("filter-movies")));
-        // setCheckbox(localStorage.getItem("filter-checkbox"));
+        // setCheckbox(localStorage.getItem("filter-checkbox")); // НЕ ВСТАВЛЯЛА НА СТРАНИЦУ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       }
     } else if (location.pathname === "/saved-movies") {
       if (savedMovies.length !== 0) {
@@ -314,7 +317,7 @@ function App() {
   function getMovies() {
     try {
       setIsLoading(true);
-      // setCheckbox(localStorage.getItem("filter-checkbox"));
+      // setCheckbox(localStorage.getItem("filter-checkbox")); // НЕ ВСТАВЛЯЛА НА СТРАНИЦУ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       let arrayMovies = JSON.parse(localStorage.getItem("movies"));
       // фильтрация поиска по названию
       const filterMovies = arrayMovies.filter(
@@ -329,7 +332,7 @@ function App() {
           JSON.stringify(filterChecboxMovies)
         );
         localStorage.setItem("filter-request-text", searchFormValue);
-        // localStorage.setItem("filter-checkbox", checkbox);
+        // localStorage.setItem("filter-checkbox", checkbox); // НЕ ВСТАВЛЯЛА НА СТРАНИЦУ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         //отражаем на странице
         if (filterMovies.length === 0) {
           setArrMovies(false);
@@ -397,11 +400,16 @@ function App() {
   //САБМИТ ФОРМЫ ПОИСКА
   function handleSubmitSearchForm(e) {
     e.preventDefault();
-    if (location.pathname === "/movies") {
-      setCheckbox(localStorage.getItem("filter-checkbox"));
-      getMovies();
-    } else if (location.pathname === "/saved-movies") {
-      getSavedMoviesFilter();
+    if (e.target.checkValidity()) {
+      setIsValidSearch(true);
+      if (location.pathname === "/movies") {
+        setCheckbox(localStorage.getItem("filter-checkbox"));
+        getMovies();
+      } else if (location.pathname === "/saved-movies") {
+        getSavedMoviesFilter();
+      }
+    } else {
+      setIsValidSearch(false);
     }
   }
 
@@ -476,6 +484,7 @@ function App() {
                       errorTextSavedMovies={errorTextSavedMovies}
                       onCheckedSaved={checkboxSaved}
                       handleChangeCheckboxSaved={handleChangeCheckboxSaved}
+                      isValidSearch={isValidSearch}
                     />
                     <Footer />
                   </>
@@ -513,6 +522,7 @@ function App() {
                       errorTextSavedMovies={errorTextSavedMovies}
                       onCheckedSaved={checkboxSaved}
                       handleChangeCheckboxSaved={handleChangeCheckboxSaved}
+                      isValidSearch={isValidSearch}
                     />
                     <Footer />
                   </>

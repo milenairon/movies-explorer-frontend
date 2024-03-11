@@ -25,7 +25,8 @@ export default function Movies({
   errorTextMovies,
   errorTextSavedMovies,
   onCheckedSaved,
-  handleChangeCheckboxSaved
+  handleChangeCheckboxSaved,
+  isValidSearch,
 }) {
   return (
     <main className="movies">
@@ -38,7 +39,8 @@ export default function Movies({
             onChecked={onChecked}
             handleChangeCheckbox={handleChangeCheckbox}
             onCheckedSaved={onCheckedSaved}
-          handleChangeCheckboxSaved={handleChangeCheckboxSaved}
+            handleChangeCheckboxSaved={handleChangeCheckboxSaved}
+            isValidSearch={isValidSearch}
           />
           <MoviesCardList
             onDelete={onDelete}
@@ -52,7 +54,6 @@ export default function Movies({
             arrSavedMovies={arrSavedMovies}
             errorTextMovies={errorTextMovies}
             errorTextSavedMovies={errorTextSavedMovies}
-            
           />
         </>
       ) : (

@@ -26,6 +26,7 @@ export default function SavedMovies({
   errorTextSavedMovies,
   onCheckedSaved,
   handleChangeCheckboxSaved,
+  isValidSearch,
 }) {
   return (
     <div className="savedMovies">
@@ -39,6 +40,7 @@ export default function SavedMovies({
             handleChangeCheckbox={handleChangeCheckbox}
             onCheckedSaved={onCheckedSaved}
             handleChangeCheckboxSaved={handleChangeCheckboxSaved}
+            isValidSearch={isValidSearch}
           />
           <MoviesCardList
             onDelete={onDelete}
