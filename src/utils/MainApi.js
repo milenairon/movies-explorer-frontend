@@ -88,7 +88,7 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-  url: "http://localhost:3005", // "https://api.milenadiploma.nomoredomainswork.ru"
+  url: "https://api.milenadiploma.nomoredomainswork.ru", // "http://localhost:3005"
 });
 
 export default mainApi;

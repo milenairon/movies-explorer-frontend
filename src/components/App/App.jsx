@@ -158,7 +158,7 @@ function App() {
       if (localStorage.getItem("filter-request-text")) {
         setSearchFormValue(localStorage.getItem("filter-request-text"));
         setMovies(JSON.parse(localStorage.getItem("filter-movies")));
-        // setCheckbox(localStorage.getItem("filter-checkbox")); // НЕ ВСТАВЛЯЛА НА СТРАНИЦУ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // setCheckbox(localStorage.getItem("filter-checkbox"));
       }
     } else if (location.pathname === "/saved-movies") {
       if (savedMovies.length !== 0) {
@@ -372,7 +372,7 @@ function App() {
   function getMovies() {
     try {
       setIsLoading(true);
-      // setCheckbox(localStorage.getItem("filter-checkbox")); // НЕ ВСТАВЛЯЛА НА СТРАНИЦУ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      // setCheckbox(localStorage.getItem("filter-checkbox"));
       let arrayMovies = JSON.parse(localStorage.getItem("movies"));
       // фильтрация поиска по названию
       const filterMovies = arrayMovies.filter(
@@ -387,7 +387,7 @@ function App() {
           JSON.stringify(filterChecboxMovies)
         );
         localStorage.setItem("filter-request-text", searchFormValue);
-        // localStorage.setItem("filter-checkbox", checkbox); // НЕ ВСТАВЛЯЛА НА СТРАНИЦУ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // localStorage.setItem("filter-checkbox", checkbox);
         //отражаем на странице
         if (filterMovies.length === 0) {
           setArrMovies(false);
