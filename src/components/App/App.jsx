@@ -44,9 +44,14 @@ function App() {
   const [movies, setMovies] = React.useState([]); // массив фильмов, которые пойдут на страницу
   const location = useLocation();
   const [buttonAddMovies, setButtonAddMovies] = React.useState(false);
+  //Валидация
   const [errorTextMovies, setErrorTextMovies] = React.useState(false);
   const [errorTextSavedMovies, setErrorTextSavedMovies] = React.useState(false);
   const [isValidSearch, setIsValidSearch] = React.useState(true);
+  const [isValid, setIsValid] = React.useState(false);
+  const [errors, setErrors] = React.useState(false);
+  const [disabledInput, setDisabledInput] = React.useState(true); // true
+
   //Изменение инпутов
   const [formValue, setFormValue] = React.useState({
     name: "",
@@ -69,6 +74,24 @@ function App() {
   function handleChangeInput(e) {
     const { name, value } = e.target;
     setFormValue({ ...formValue, [name]: value });
+    setIsValid(e.target.closest("form").checkValidity());
+    if (location.pathname === "/profile") {
+      if (currentUser.name === formValue.name) {
+        setErrors({
+          name: "Введите, пожалуйста, имя, отличное от предыдущего",
+        });
+        setIsValid(false);
+      } else if (currentUser.email === formValue.email) {
+        setErrors({
+          email: "Введите, пожалуйста, почту, отличную от предыдущей",
+        });
+        setIsValid(false);
+      } else {
+        setErrors({ ...errors, [name]: e.target.validationMessage });
+      }
+    } else {
+      setErrors({ ...errors, [name]: e.target.validationMessage });
+    }
   }
 
   //ИЗМЕНЕНИЕ ИНПУТА ПОИСКОВОЙ СТРОКИ
@@ -197,6 +220,18 @@ function App() {
     }
   }, [loggedIn]);
 
+  //  вставить в инпуты значение
+  React.useEffect(() => {
+    if (location.pathname === "/profile") {
+      if (currentUser) {
+        setFormValue({
+          name: currentUser ? currentUser.name : "",
+          email: currentUser ? currentUser.email : "",
+        });
+      }
+    }
+  }, [location, loggedIn]);
+
   // УДАЛИТЬ ТОКЕН, и все из хранилища, кроме массива карточек
   function handleLoggedInFalse() {
     localStorage.removeItem("jwt");
@@ -217,7 +252,7 @@ function App() {
     navigate("/");
   }
 
-  //Сохранить данные формы в профиле
+  //Сохранить данные формы в профиле(сабмит)
   function onUpdateUserInfo(name, email) {
     mainApi
       .updateUserInfo({ name, email })
@@ -231,6 +266,26 @@ function App() {
           console.error("При обновлении профиля произошла ошибка.");
         }
       });
+  }
+
+  // сделать инпуты открытыми для редактирования
+  function handleDisabledInput() {
+    setDisabledInput(false);
+  }
+
+  // САБМИТ profile
+  function handleSubmitProfile(e) {
+    e.preventDefault();
+    if (!formValue.name) {
+      onUpdateUserInfo(currentUser.name, formValue.email);
+      setDisabledInput(true);
+    } else if (!formValue.email) {
+      onUpdateUserInfo(formValue.name, currentUser.email);
+      setDisabledInput(true);
+    } else {
+      onUpdateUserInfo(formValue.name, formValue.email);
+      setDisabledInput(true);
+    }
   }
 
   //ПРОВЕРКА ТОКЕНА (чтобы не входить, если не выходил из системы)
@@ -544,6 +599,13 @@ function App() {
                       loggedIn={loggedIn}
                       removeJwt={handleLoggedInFalse}
                       onUpdateUserInfo={onUpdateUserInfo}
+                      isValid={isValid}
+                      errors={errors}
+                      onSubmit={handleSubmitProfile}
+                      handleChangeInput={handleChangeInput}
+                      disabledInput={disabledInput}
+                      handleDisabledInput={handleDisabledInput}
+                      formValue={formValue}
                     />
                   </>
                 ) : (
@@ -561,6 +623,8 @@ function App() {
                     onSubmit={handleSubmitLogin}
                     email={formValue.email}
                     password={formValue.password}
+                    isValid={isValid}
+                    errors={errors}
                   />
                 </>
               }
@@ -576,6 +640,8 @@ function App() {
                     name={formValue.name}
                     email={formValue.email}
                     password={formValue.password}
+                    isValid={isValid}
+                    errors={errors}
                   />
                 </>
               }
