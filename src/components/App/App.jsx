@@ -245,6 +245,7 @@ function App() {
     //чекбокс
     localStorage.removeItem("filter-checkbox");
     setLoggedIn(false);
+    // localStorage.removeItem("movies");
     //ошибки
     setErrorTextSavedMovies(false);
     setErrorTextMovies(false);
@@ -353,19 +354,21 @@ function App() {
 
   // Получить все карточки со стороннего сайта
   React.useEffect(() => {
-    if (!localStorage.getItem("movies")) {
-      setIsLoading(true);
-      moviesApi
-        .getAllMovies()
-        .then((movies) => {
-          localStorage.setItem("movies", JSON.stringify(movies));
-          setTimeout(() => setIsLoading(false), 500);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+    if (loggedIn) {
+      if (!localStorage.getItem("movies")) {
+        setIsLoading(true);
+        moviesApi
+          .getAllMovies()
+          .then((movies) => {
+            localStorage.setItem("movies", JSON.stringify(movies));
+            setTimeout(() => setIsLoading(false), 500);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
     }
-  }, []);
+  }, [loggedIn]);
 
   //ФИЛЬТР
   // ФИЛЬМЫ
