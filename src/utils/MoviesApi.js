@@ -18,7 +18,6 @@ class MoviesApi {
     return this._sendRequest(`${this._url}`, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
         "Content-Type": "application/json",
       },
     });

@@ -245,7 +245,7 @@ function App() {
     //чекбокс
     localStorage.removeItem("filter-checkbox");
     setLoggedIn(false);
-    // localStorage.removeItem("movies");
+    localStorage.removeItem("movies");
     //ошибки
     setErrorTextSavedMovies(false);
     setErrorTextMovies(false);
@@ -441,7 +441,7 @@ function App() {
         }
       }
       // фильтрация поиска по времени
-      if (checkboxSaved) {
+      if (!checkboxSaved) {
         let filterChecboxMovies = filterSavedMovies.filter(
           (movie) => movie.duration < 45
         );
