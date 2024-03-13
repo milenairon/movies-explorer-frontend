@@ -16,7 +16,7 @@ export default function MoviesCardList({
   arrMovies,
   arrSavedMovies,
   errorTextMovies,
-  errorTextSavedMovies
+  errorTextSavedMovies,
 }) {
   //количество показанных видео
   const [sumMovies, setSumMovies] = React.useState(0);
@@ -71,23 +71,23 @@ export default function MoviesCardList({
 
   return (
     <section className="movies-card-list">
-      <ul className="movies-card-list__items">
-        {location.pathname === "/movies" && (
-          <>
-            {!arrMovies ? (
-              <>
-                {errorTextMovies ? (
-                  <p className="movies-card-list__title">
-                    Во время запроса произошла ошибка. Возможно, проблема с
-                    соединением или сервер недоступен. Подождите немного и
-                    попробуйте ещё раз
-                  </p>
-                ) : (
-                  <h2 className="movies-card-list__title">Ничего не найдено</h2>
-                )}
-              </>
-            ) : (
-              <>
+      {location.pathname === "/movies" && (
+        <>
+          {!arrMovies ? (
+            <>
+              {errorTextMovies ? (
+                <p className="movies-card-list__title">
+                  Во время запроса произошла ошибка. Возможно, проблема с
+                  соединением или сервер недоступен. Подождите немного и
+                  попробуйте ещё раз
+                </p>
+              ) : (
+                <h2 className="movies-card-list__title">Ничего не найдено</h2>
+              )}
+            </>
+          ) : (
+            <>
+              <ul className="movies-card-list__items">
                 {movieList.slice(0, sumMovies).map((movie) => {
                   return (
                     <MoviesCard
@@ -103,26 +103,28 @@ export default function MoviesCardList({
                     />
                   );
                 })}
-              </>
-            )}
-          </>
-        )}
-        {location.pathname === "/saved-movies" && (
-          <>
-            {!arrSavedMovies ? (
-              <>
-                {errorTextSavedMovies ? (
-                  <p className="movies-card-list__title">
-                    Во время запроса произошла ошибка. Возможно, проблема с
-                    соединением или сервер недоступен. Подождите немного и
-                    попробуйте ещё раз
-                  </p>
-                ) : (
-                  <h2 className="movies-card-list__title">Ничего не найдено</h2>
-                )}
-              </>
-            ) : (
-              <>
+              </ul>
+            </>
+          )}
+        </>
+      )}
+      {location.pathname === "/saved-movies" && (
+        <>
+          {!arrSavedMovies ? (
+            <>
+              {errorTextSavedMovies ? (
+                <p className="movies-card-list__title">
+                  Во время запроса произошла ошибка. Возможно, проблема с
+                  соединением или сервер недоступен. Подождите немного и
+                  попробуйте ещё раз
+                </p>
+              ) : (
+                <h2 className="movies-card-list__title">Ничего не найдено</h2>
+              )}
+            </>
+          ) : (
+            <>
+              <ul className="movies-card-list__items">
                 {savedMoviesFilter.slice(0, sumMovies).map((movie) => {
                   return (
                     <MoviesCard
@@ -138,11 +140,12 @@ export default function MoviesCardList({
                     />
                   );
                 })}
-              </>
-            )}
-          </>
-        )}
-      </ul>
+              </ul>
+            </>
+          )}
+        </>
+      )}
+
       {buttonAddMovies && location.pathname === "/movies" && (
         <button className="movies-card-list__button" onClick={addMovies}>
           Ещё

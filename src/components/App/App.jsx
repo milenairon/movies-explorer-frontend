@@ -40,7 +40,7 @@ function App() {
   const [isPopupMenuOpen, setIsPopupMenuOpen] = React.useState(false);
   const isSomePopupOpen = isPopupMenuOpen; // + "|| другой попап || еще другой попап"
   const navigate = useNavigate();
-  const [currentUser, setCurrentUser] = React.useState(null);
+  const [currentUser, setCurrentUser] = React.useState(null); // или {}????????????????????????
   const [movies, setMovies] = React.useState([]); // массив фильмов, которые пойдут на страницу
   const location = useLocation();
   const [buttonAddMovies, setButtonAddMovies] = React.useState(false);
@@ -51,27 +51,26 @@ function App() {
   const [isValid, setIsValid] = React.useState(false);
   const [errors, setErrors] = React.useState(false);
   const [disabledInput, setDisabledInput] = React.useState(true); // true
-
+  //Изменение инпута поисковой строки
+  const [searchFormValue, setSearchFormValue] = React.useState("");
+  // изменение чекбокса
+  const [checkboxSaved, setCheckboxSaved] = React.useState(false);
   //Изменение инпутов
   const [formValue, setFormValue] = React.useState({
     name: "",
     email: "",
     password: "",
   });
-
-  //Изменение инпута поисковой строки
-  const [searchFormValue, setSearchFormValue] = React.useState("");
-
   //Изменение кнопки чекбокс Короткометражек
   const [checkbox, setCheckbox] = React.useState(
     localStorage.getItem("filter-checkbox")
       ? localStorage.getItem("filter-checkbox")
       : false
   );
-  const [checkboxSaved, setCheckboxSaved] = React.useState(false);
 
   //ИЗМЕНЕНИЕ ИНПУТОВ
   function handleChangeInput(e) {
+    // console.log(currentUser); /////УДАЛИ ПОТОМ!!!!!!!!!
     const { name, value } = e.target;
     setFormValue({ ...formValue, [name]: value });
     setIsValid(e.target.closest("form").checkValidity());
@@ -151,6 +150,7 @@ function App() {
 
   React.useEffect(() => {
     tokenCheck();
+    // console.log(currentUser); /////УДАЛИ ПОТОМ!!!!!!!!!
   }, []);
 
   React.useEffect(() => {
@@ -158,7 +158,7 @@ function App() {
       if (localStorage.getItem("filter-request-text")) {
         setSearchFormValue(localStorage.getItem("filter-request-text"));
         setMovies(JSON.parse(localStorage.getItem("filter-movies")));
-        // setCheckbox(localStorage.getItem("filter-checkbox"));
+        setCheckbox(JSON.parse(localStorage.getItem("filter-checkbox")));
       }
     } else if (location.pathname === "/saved-movies") {
       if (savedMovies.length !== 0) {
@@ -188,6 +188,7 @@ function App() {
 
   React.useEffect(() => {
     if (loggedIn) {
+      // if (!currentUser) {
       mainApi
         .getUserInfo()
         .then((data) => {
@@ -196,6 +197,7 @@ function App() {
         .catch((err) => {
           console.error(`Данные пользователя не получены: ${err}`);
         });
+      // }
       getSavedMovies(); // получить сохраненные фильмы
       if (location.pathname === "/movies") {
         setIsLoading(true);
@@ -204,7 +206,7 @@ function App() {
           setSearchFormValue(
             localStorage.getItem("filter-request-text", searchFormValue)
           );
-          setCheckbox(localStorage.getItem("filter-checkbox"));
+          setCheckbox(JSON.parse(localStorage.getItem("filter-checkbox")));
           setArrMovies(true);
           setTimeout(() => setIsLoading(false), 500);
         } else {
@@ -221,16 +223,16 @@ function App() {
   }, [loggedIn]);
 
   //  вставить в инпуты значение
-  React.useEffect(() => {
-    if (location.pathname === "/profile") {
-      if (currentUser) {
-        setFormValue({
-          name: currentUser ? currentUser.name : "",
-          email: currentUser ? currentUser.email : "",
-        });
-      }
-    }
-  }, [location, loggedIn]);
+  // React.useEffect(() => {
+  //   if (location.pathname === "/profile") {
+  //     if ((currentUser !== null) && (loggedIn) ) {
+  //       setFormValue({
+  //         name: currentUser !== null ? currentUser.name : "",
+  //         email: currentUser !== null ? currentUser.email : "",
+  //       });
+  //     }
+  //   }
+  // }, [location, loggedIn]);
 
   // УДАЛИТЬ ТОКЕН, и все из хранилища, кроме массива карточек
   function handleLoggedInFalse() {
@@ -246,6 +248,7 @@ function App() {
     localStorage.removeItem("filter-checkbox");
     setLoggedIn(false);
     localStorage.removeItem("movies");
+    // setCurrentUser(null); ////////////////// НЕ ЗНАЮ, НАДО ЛИ ЭТО СЮДА ВСТАВЛЯТЬ???
     //ошибки
     setErrorTextSavedMovies(false);
     setErrorTextMovies(false);
@@ -375,7 +378,7 @@ function App() {
   function getMovies() {
     try {
       setIsLoading(true);
-      // setCheckbox(localStorage.getItem("filter-checkbox"));
+      // setCheckbox(setCheckbox(JSON.parse(localStorage.getItem("filter-checkbox")));
       let arrayMovies = JSON.parse(localStorage.getItem("movies"));
       // фильтрация поиска по названию
       const filterMovies = arrayMovies.filter(
@@ -406,7 +409,7 @@ function App() {
       // фильтрация поиска по времени
       if (checkbox) {
         let filterChecboxMovies = filterMovies.filter(
-          (movie) => movie.duration < 45
+          (movie) => movie.duration < 40
         );
         addToLocalStorage(filterChecboxMovies);
       } else {
@@ -443,7 +446,7 @@ function App() {
       // фильтрация поиска по времени
       if (!checkboxSaved) {
         let filterChecboxMovies = filterSavedMovies.filter(
-          (movie) => movie.duration < 45
+          (movie) => movie.duration < 40
         );
         addToLocalStorage(filterChecboxMovies);
       } else {
@@ -461,7 +464,7 @@ function App() {
     if (e.target.checkValidity()) {
       setIsValidSearch(true);
       if (location.pathname === "/movies") {
-        setCheckbox(localStorage.getItem("filter-checkbox"));
+        setCheckbox(JSON.parse(localStorage.getItem("filter-checkbox")));
         getMovies();
       } else if (location.pathname === "/saved-movies") {
         getSavedMoviesFilter();
@@ -619,34 +622,42 @@ function App() {
             <Route
               path="/signin"
               element={
-                <>
-                  <Top text="Рады видеть!" />
-                  <Login
-                    handleChangeInput={handleChangeInput}
-                    onSubmit={handleSubmitLogin}
-                    email={formValue.email}
-                    password={formValue.password}
-                    isValid={isValid}
-                    errors={errors}
-                  />
-                </>
+                loggedIn ? (
+                  <Navigate to="/" replace />
+                ) : (
+                  <>
+                    <Top text="Рады видеть!" />
+                    <Login
+                      handleChangeInput={handleChangeInput}
+                      onSubmit={handleSubmitLogin}
+                      email={formValue.email}
+                      password={formValue.password}
+                      isValid={isValid}
+                      errors={errors}
+                    />
+                  </>
+                )
               }
             />
             <Route
               path="/signup"
               element={
-                <>
-                  <Top text="Добро пожаловать!" />
-                  <Register
-                    handleChangeInput={handleChangeInput}
-                    onSubmit={handleSubmitRegister}
-                    name={formValue.name}
-                    email={formValue.email}
-                    password={formValue.password}
-                    isValid={isValid}
-                    errors={errors}
-                  />
-                </>
+                loggedIn ? (
+                  <Navigate to="/" replace />
+                ) : (
+                  <>
+                    <Top text="Добро пожаловать!" />
+                    <Register
+                      handleChangeInput={handleChangeInput}
+                      onSubmit={handleSubmitRegister}
+                      name={formValue.name}
+                      email={formValue.email}
+                      password={formValue.password}
+                      isValid={isValid}
+                      errors={errors}
+                    />
+                  </>
+                )
               }
             />
             {/*replace возвращает новую строку с некоторыми или всеми сопоставлениями с шаблоном, заменёнными на заменитель*/}

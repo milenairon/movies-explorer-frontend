@@ -34,6 +34,7 @@ export default function Profile({
             maxLength={30}
             required={true}
             placeholder="Имя"
+            pattern="[А-Яа-яA-Za-z\s\-Ёё]+"
             onChange={handleChangeInput}
             value={formValue.name}
             disabled={disabledInput}

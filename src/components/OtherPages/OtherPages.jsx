@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 export default function OtherPages() {
   const navigate = useNavigate();
   function returnPreviousPage() {
-    navigate(-3);
+    navigate(-1);
   }
 
   return (

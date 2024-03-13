@@ -33,6 +33,7 @@ export default function Register({
             maxLength={30}
             required={true}
             value={name}
+            pattern="[А-Яа-яA-Za-z\s\-Ёё]+"
             placeholder="Имя"
             onChange={handleChangeInput}
           />
