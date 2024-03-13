@@ -28,6 +28,7 @@ export default function SavedMovies({
   handleChangeCheckboxSaved,
   isValidSearch,
 }) {
+  
   return (
     <div className="savedMovies">
       {!isLoading ? (

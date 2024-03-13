@@ -35,7 +35,7 @@ function App() {
   const [isLoading, setIsLoading] = React.useState(false); // false
   const [savedMovies, setSavedMovies] = React.useState([]); // массив сохраненных фильмов
   const [savedMoviesFilter, setSavedMoviesFilter] = React.useState([]); // массив сохраненных фильмов отфильтрованный
-  const [arrMovies, setArrMovies] = React.useState(false); // есть ли массив на странице с фильмами?
+  const [arrMovies, setArrMovies] = React.useState(true); // есть ли массив на странице с фильмами?
   const [arrSavedMovies, setArrSavedMovies] = React.useState(false); // есть ли массив на странице с сохраненными фильмами?
   const [isPopupMenuOpen, setIsPopupMenuOpen] = React.useState(false);
   const isSomePopupOpen = isPopupMenuOpen; // + "|| другой попап || еще другой попап"
@@ -62,11 +62,7 @@ function App() {
     password: "",
   });
   //Изменение кнопки чекбокс Короткометражек
-  const [checkbox, setCheckbox] = React.useState(
-    localStorage.getItem("filter-checkbox")
-      ? localStorage.getItem("filter-checkbox")
-      : false
-  );
+  const [checkbox, setCheckbox] = React.useState(false);
 
   //ИЗМЕНЕНИЕ ИНПУТОВ
   function handleChangeInput(e) {
@@ -102,8 +98,8 @@ function App() {
   function handleChangeCheckbox() {
     if (isValidSearch) {
       setCheckbox(!checkbox);
-      localStorage.setItem("filter-checkbox", checkbox);
-      getMovies();
+      localStorage.setItem("filter-checkbox", !checkbox); // ВОЗМОЖНО !checkbox??????????????????????????????
+      getMovies(); // ИЗ-ЗА ЭТОГО НЕ РАБОТАЕТ ЧЕКБОКС!!!!!!!!!!!!!!!!!!!!!!!!
     }
   }
   function handleChangeCheckboxSaved() {
@@ -206,12 +202,12 @@ function App() {
           setSearchFormValue(
             localStorage.getItem("filter-request-text", searchFormValue)
           );
-          setCheckbox(JSON.parse(localStorage.getItem("filter-checkbox")));
+          // setCheckbox(JSON.parse(localStorage.getItem("filter-checkbox"))); // НЕ ПОКАЗЫВАЕТ ПОЧЕМУ-ТО????
           setArrMovies(true);
           setTimeout(() => setIsLoading(false), 500);
         } else {
           setMovies([]);
-          setArrMovies(false);
+          setArrMovies(true);
           setTimeout(() => setIsLoading(false), 500);
         }
       } else if (location.pathname === "/saved-movies") {
@@ -232,7 +228,7 @@ function App() {
   //       });
   //     }
   //   }
-  // }, [location, loggedIn]);
+  // }, [location, loggedIn]); //при выходе и входе на страницу вылазиет ошибка + не успевают приходить фильмы на странице с обычными фильмами
 
   // УДАЛИТЬ ТОКЕН, и все из хранилища, кроме массива карточек
   function handleLoggedInFalse() {
@@ -377,8 +373,8 @@ function App() {
   // ФИЛЬМЫ
   function getMovies() {
     try {
-      setIsLoading(true);
-      // setCheckbox(setCheckbox(JSON.parse(localStorage.getItem("filter-checkbox")));
+      // setIsLoading(true);
+      // setCheckbox(JSON.parse(localStorage.getItem("filter-checkbox")));
       let arrayMovies = JSON.parse(localStorage.getItem("movies"));
       // фильтрация поиска по названию
       const filterMovies = arrayMovies.filter(
@@ -406,6 +402,7 @@ function App() {
           setTimeout(() => setIsLoading(false), 500);
         }
       }
+
       // фильтрация поиска по времени
       if (checkbox) {
         let filterChecboxMovies = filterMovies.filter(
@@ -444,7 +441,7 @@ function App() {
         }
       }
       // фильтрация поиска по времени
-      if (!checkboxSaved) {
+      if (checkboxSaved) {
         let filterChecboxMovies = filterSavedMovies.filter(
           (movie) => movie.duration < 40
         );
@@ -464,7 +461,7 @@ function App() {
     if (e.target.checkValidity()) {
       setIsValidSearch(true);
       if (location.pathname === "/movies") {
-        setCheckbox(JSON.parse(localStorage.getItem("filter-checkbox")));
+        // setCheckbox(JSON.parse(localStorage.getItem("filter-checkbox"))); // ВСЕ РАВНО НЕ СМОТРИТ НА ЧЕКБОКС!!!!!!!
         getMovies();
       } else if (location.pathname === "/saved-movies") {
         getSavedMoviesFilter();
@@ -501,6 +498,7 @@ function App() {
         console.error(err);
       });
   }
+
   return (
     <div className="app">
       <CurrentUserContext.Provider value={currentUser}>

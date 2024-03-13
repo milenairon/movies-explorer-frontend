@@ -66,6 +66,8 @@ export default function MoviesCardList({
   React.useEffect(() => {
     if (sumMovies >= movieList.length) {
       setButtonAddMovies(false);
+    } else {
+      setButtonAddMovies(true);
     }
   }, [addMovies]);
 

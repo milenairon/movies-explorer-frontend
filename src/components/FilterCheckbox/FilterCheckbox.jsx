@@ -18,12 +18,13 @@ export default function FilterCheckbox({
           value={onChecked}
           checked={onChecked}
           onChange={handleChangeCheckbox}
+          // defaultChecked={true}
         />
       )}
       {location.pathname === "/saved-movies" && (
         <input
           type="checkbox"
-          value={onCheckedSaved}
+          value={onCheckedSaved} // необязательно?????
           checked={onCheckedSaved}
           onChange={handleChangeCheckboxSaved}
         />
