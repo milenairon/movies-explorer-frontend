@@ -179,7 +179,7 @@ function App() {
       setSearchFormValue("");
       setSavedMoviesFilter(savedMovies);
       setCheckboxSaved(false);
-      setTimeout(() => console.log(savedMovies), 2000); // удали меня
+      // setTimeout(() => console.log(savedMovies), 2000); // удали меня
     }
   }, [location]);
 
@@ -507,7 +507,9 @@ function App() {
         setSavedMovies((movies) =>
           movies.filter((savedMovie) => movie._id !== savedMovie._id)
         );
-        console.log(savedMovies);
+      })
+      .then(() => {
+        navigate("/saved-movies");
       })
       .catch((err) => {
         console.error(err);
