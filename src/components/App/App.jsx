@@ -160,11 +160,9 @@ function App() {
         setCheckbox(JSON.parse(localStorage.getItem("filter-checkbox")));
       }
     } else if (location.pathname === "/saved-movies") {
-      if (savedMovies.length !== 0) {
-        setSearchFormValue("");
-        setSavedMoviesFilter(savedMovies);
-        setCheckboxSaved(false);
-      }
+      setSearchFormValue("");
+      setSavedMoviesFilter(savedMovies);
+      setCheckboxSaved(false);
     }
   }, [location]);
 
@@ -224,18 +222,6 @@ function App() {
       }
     }
   }, [loggedIn]);
-
-  //  вставить в инпуты значение
-  // React.useEffect(() => {
-  //   if (location.pathname === "/profile") {
-  //     if ((currentUser !== null) && (loggedIn) ) {
-  //       setFormValue({
-  //         name: currentUser !== null ? currentUser.name : "",
-  //         email: currentUser !== null ? currentUser.email : "",
-  //       });
-  //     }
-  //   }
-  // }, [location, loggedIn]); //при выходе и входе на страницу вылазиет ошибка + не успевают приходить фильмы на странице с обычными фильмами
 
   // УДАЛИТЬ ТОКЕН, и все из хранилища, кроме массива карточек
   function handleLoggedInFalse() {
@@ -452,7 +438,7 @@ function App() {
         }
       }
       // фильтрация поиска по времени
-      if (checkboxSaved) {
+      if (!checkboxSaved) {
         let filterChecboxMovies = filterSavedMovies.filter(
           (movie) => movie.duration < 40
         );
