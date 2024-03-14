@@ -75,12 +75,12 @@ function App() {
     setInputChange({ ...inputChange, [name]: true });
     setIsValid(e.target.closest("form").checkValidity());
     if (location.pathname === "/profile") {
-      if (currentUser.name === formValue.name) {
+      if (currentUser.name === value) {
         setErrors({
           name: "Введите, пожалуйста, имя, отличное от предыдущего",
         });
         setIsValid(false);
-      } else if (currentUser.email === formValue.email) {
+      } else if (currentUser.email === value) {
         setErrors({
           email: "Введите, пожалуйста, почту, отличную от предыдущей",
         });
@@ -281,6 +281,7 @@ function App() {
   // сделать инпуты открытыми для редактирования
   function handleDisabledInput() {
     setDisabledInput(false);
+    setIsValid(false);
   }
 
   // САБМИТ profile
@@ -497,7 +498,6 @@ function App() {
         console.error(err);
       });
   }
-  // }
 
   //УДАЛИТЬ ФИЛЬМ
   function handleDeleteMovies(movie) {
