@@ -14,6 +14,7 @@ export default function Profile({
   disabledInput,
   handleDisabledInput,
   formValue,
+  inputChange,
 }) {
   const currentUser = React.useContext(CurrentUserContext);
   return (
@@ -36,7 +37,11 @@ export default function Profile({
             placeholder="Имя"
             pattern="[А-Яа-яA-Za-z\s\-Ёё]+"
             onChange={handleChangeInput}
-            value={formValue.name}
+            value={
+              !inputChange.name && currentUser
+                ? currentUser.name
+                : formValue.name
+            }
             disabled={disabledInput}
           ></input>
         </label>
@@ -52,7 +57,11 @@ export default function Profile({
             maxLength={40}
             required={true}
             placeholder="Почта"
-            value={formValue.email}
+            value={
+              !inputChange.email && currentUser
+                ? currentUser.email
+                : formValue.email
+            }
             disabled={disabledInput}
             onChange={handleChangeInput}
             pattern="^(http(s){0,1}:\/\/.){0,1}[\-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([\-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$"

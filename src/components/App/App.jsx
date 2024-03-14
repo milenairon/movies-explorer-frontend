@@ -61,14 +61,18 @@ function App() {
     email: "",
     password: "",
   });
+  const [inputChange, setInputChange] = React.useState({
+    name: false,
+    email: false,
+  });
   //Изменение кнопки чекбокс Короткометражек
   const [checkbox, setCheckbox] = React.useState(false);
 
   //ИЗМЕНЕНИЕ ИНПУТОВ
   function handleChangeInput(e) {
-    // console.log(currentUser); /////УДАЛИ ПОТОМ!!!!!!!!!
     const { name, value } = e.target;
     setFormValue({ ...formValue, [name]: value });
+    setInputChange({ ...inputChange, [name]: true });
     setIsValid(e.target.closest("form").checkValidity());
     if (location.pathname === "/profile") {
       if (currentUser.name === formValue.name) {
@@ -146,7 +150,6 @@ function App() {
 
   React.useEffect(() => {
     tokenCheck();
-    // console.log(currentUser); /////УДАЛИ ПОТОМ!!!!!!!!!
   }, []);
 
   React.useEffect(() => {
@@ -183,6 +186,10 @@ function App() {
   }
 
   React.useEffect(() => {
+    setInputChange({
+      name: false,
+      email: false,
+    });
     if (loggedIn) {
       // if (!currentUser) {
       mainApi
@@ -276,6 +283,10 @@ function App() {
   // САБМИТ profile
   function handleSubmitProfile(e) {
     e.preventDefault();
+    setInputChange({
+      name: false,
+      email: false,
+    });
     if (!formValue.name) {
       onUpdateUserInfo(currentUser.name, formValue.email);
       setDisabledInput(true);
@@ -610,6 +621,7 @@ function App() {
                       disabledInput={disabledInput}
                       handleDisabledInput={handleDisabledInput}
                       formValue={formValue}
+                      inputChange={inputChange}
                     />
                   </>
                 ) : (
