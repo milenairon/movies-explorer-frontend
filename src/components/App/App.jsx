@@ -99,16 +99,30 @@ function App() {
   }
 
   //ИЗМЕНЕНИЕ ЧЕКБОКСА
-  function handleChangeCheckbox() {
+  function handleChangeCheckbox(e) {
     if (isValidSearch) {
       setCheckbox(!checkbox);
       localStorage.setItem("filter-checkbox", !checkbox); // ВОЗМОЖНО !checkbox??????????????????????????????
-      getMovies(); // ИЗ-ЗА ЭТОГО НЕ РАБОТАЕТ ЧЕКБОКС!!!!!!!!!!!!!!!!!!!!!!!!
+      setIsValidSearch(false);
+      setIsValid(e.target.closest("form").checkValidity());
+      if (e.target.closest("form").checkValidity()) {
+        setIsValidSearch(true);
+        getMovies();
+      } else {
+        setIsValidSearch(false);
+      }
     }
   }
-  function handleChangeCheckboxSaved() {
+  function handleChangeCheckboxSaved(e) {
     setCheckboxSaved(!checkboxSaved);
-    getSavedMoviesFilter();
+    setIsValidSearch(false);
+    setIsValid(e.target.closest("form").checkValidity());
+    if (e.target.closest("form").checkValidity()) {
+      setIsValidSearch(true);
+      getSavedMoviesFilter();
+    } else {
+      setIsValidSearch(false);
+    }
   }
 
   //ОТКРЫТЬ ПОПАПЫ
@@ -158,11 +172,14 @@ function App() {
         setSearchFormValue(localStorage.getItem("filter-request-text"));
         setMovies(JSON.parse(localStorage.getItem("filter-movies")));
         setCheckbox(JSON.parse(localStorage.getItem("filter-checkbox")));
+      } else {
+        setSearchFormValue(""); // пробный вариат, вроде, работает, строка поиска пустая
       }
     } else if (location.pathname === "/saved-movies") {
       setSearchFormValue("");
       setSavedMoviesFilter(savedMovies);
       setCheckboxSaved(false);
+      setTimeout(() => console.log(savedMovies), 2000); // удали меня
     }
   }, [location]);
 
@@ -174,13 +191,13 @@ function App() {
       const data = await res;
       setSavedMovies(data);
       setSavedMoviesFilter(data);
-      setTimeout(() => setArrSavedMovies(true), 1000);
+      setTimeout(() => setArrSavedMovies(true), 500); // надо ли здесь????
     } catch (err) {
       console.error(
         `Что-то пошло не так при получении сохраненных карточек: ${err}`
       );
     }
-    setTimeout(() => setIsLoading(false), 500);
+    setTimeout(() => setIsLoading(false), 500); // надо ли здесь?
   }
 
   React.useEffect(() => {
@@ -370,7 +387,7 @@ function App() {
   // ФИЛЬМЫ
   function getMovies() {
     try {
-      // setIsLoading(true);
+      // setIsLoading(true); ////из-за этого не работает чекбокс на обычные фильмы!!!!!
       // setCheckbox(JSON.parse(localStorage.getItem("filter-checkbox")));
       let arrayMovies = JSON.parse(localStorage.getItem("movies"));
       // фильтрация поиска по названию
@@ -490,6 +507,7 @@ function App() {
         setSavedMovies((movies) =>
           movies.filter((savedMovie) => movie._id !== savedMovie._id)
         );
+        console.log(savedMovies);
       })
       .catch((err) => {
         console.error(err);
