@@ -254,6 +254,9 @@ function App() {
     localStorage.removeItem("filter-checkbox");
     setLoggedIn(false);
     localStorage.removeItem("movies");
+    setSavedMoviesFilter([]); //удалить??????????????
+
+    setMovies([]); //удалить??????????????
     // setCurrentUser(null); ////////////////// НЕ ЗНАЮ, НАДО ЛИ ЭТО СЮДА ВСТАВЛЯТЬ???
     //ошибки
     setErrorTextSavedMovies(false);
@@ -374,6 +377,7 @@ function App() {
         moviesApi
           .getAllMovies()
           .then((movies) => {
+            updateSavedIdForMovies();
             localStorage.setItem("movies", JSON.stringify(movies));
             setTimeout(() => setIsLoading(false), 500);
           })
@@ -383,6 +387,17 @@ function App() {
       }
     }
   }, [loggedIn]);
+
+  function updateSavedIdForMovies() {
+    let savedIdToId = new Map();
+    savedMovies.forEach((movie) => savedIdToId.set(movie.movieId, movie._id));
+    movies.map((movie) => {
+      if (savedIdToId.has(movie.id)) {
+        movie._id = savedIdToId.get(movie.id);
+      }
+      return movie;
+    });
+  }
 
   //ФИЛЬТР
   // ФИЛЬМЫ
@@ -499,6 +514,10 @@ function App() {
       });
   }
 
+  React.useEffect(() => {
+    updateSavedIdForMovies();
+  }, [handleSaveMovies]);
+
   //УДАЛИТЬ ФИЛЬМ
   function handleDeleteMovies(movie) {
     mainApi
@@ -508,13 +527,14 @@ function App() {
           movies.filter((savedMovie) => movie._id !== savedMovie._id)
         );
       })
-      .then(() => {
-        navigate("/saved-movies");
-      })
       .catch((err) => {
         console.error(err);
       });
   }
+
+  React.useEffect(() => {
+    setSavedMoviesFilter(savedMovies);
+  }, [handleSaveMovies]);
 
   return (
     <div className="app">

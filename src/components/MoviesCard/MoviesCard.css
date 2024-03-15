@@ -87,8 +87,9 @@
   right: 14px;
   visibility: 1;
   opacity: 1;
+  cursor: pointer;
 }
-/* Кнопка удаления фильма из охраненных */
+/* Кнопка удаления фильма из сохраненных */
 .movies-card__button-delete {
   position: absolute;
   top: 14px;
@@ -106,6 +107,10 @@
 }
 
 /* ЭФФЕКТЫ ЭФФЕКТЫ ЭФФЕКТЫ */
+.movies-card__button-delete-movies:hover {
+  opacity: 80%;
+}
+
 .movies-card__trailer-link:hover + .movies-card__button-delete {
   visibility: visible;
   opacity: 1;

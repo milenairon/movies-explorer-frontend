@@ -65,13 +65,17 @@ export default function MoviesCard({
       {location.pathname === "/movies" && (
         <>
           {onSaved ? (
-            <>
+            <button
+              type="button"
+              className="movies-card__button-delete-movies"
+              onClick={handleDeleteMovies}
+            >
               <img
                 className="movies-card__image-saved-movies"
                 src={imageSavedMovies}
-                alt="Фильм добавлен в сохраненные"
+                alt="Фильм добавлен в сохраненные, удалить фильм из сохраненных"
               />
-            </>
+            </button>
           ) : (
             <>
               <button
