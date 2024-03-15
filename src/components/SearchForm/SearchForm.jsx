@@ -7,7 +7,6 @@ export default function SearchForm({
   handleSubmitSearchForm,
   searchBar,
   handleChangeInput,
-  onChecked,
   handleChangeCheckbox,
   onCheckedSaved,
   handleChangeCheckboxSaved,
@@ -41,7 +40,6 @@ export default function SearchForm({
           </span>
         )}
         <FilterCheckbox
-          onChecked={onChecked}
           handleChangeCheckbox={handleChangeCheckbox}
           onCheckedSaved={onCheckedSaved}
           handleChangeCheckboxSaved={handleChangeCheckboxSaved}

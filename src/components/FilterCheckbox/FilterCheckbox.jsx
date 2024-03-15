@@ -4,7 +4,7 @@ import "./FilterCheckbox.css";
 import { useLocation } from "react-router-dom";
 
 export default function FilterCheckbox({
-  onChecked,
+  
   handleChangeCheckbox,
   onCheckedSaved,
   handleChangeCheckboxSaved,
@@ -15,16 +15,14 @@ export default function FilterCheckbox({
       {location.pathname === "/movies" && (
         <input
           type="checkbox"
-          value={onChecked}
-          checked={onChecked}
           onChange={handleChangeCheckbox}
-          // defaultChecked={true}
+          defaultChecked={localStorage.getItem("filter-checkbox")}
         />
       )}
       {location.pathname === "/saved-movies" && (
         <input
           type="checkbox"
-          value={onCheckedSaved} // необязательно?????
+          value={onCheckedSaved}
           checked={onCheckedSaved}
           onChange={handleChangeCheckboxSaved}
         />

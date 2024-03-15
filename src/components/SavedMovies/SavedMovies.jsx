@@ -20,7 +20,6 @@ export default function SavedMovies({
   handleChangeInput,
   arrMovies,
   arrSavedMovies,
-  onChecked,
   handleChangeCheckbox,
   errorTextMovies,
   errorTextSavedMovies,
@@ -28,7 +27,6 @@ export default function SavedMovies({
   handleChangeCheckboxSaved,
   isValidSearch,
 }) {
-  
   return (
     <div className="savedMovies">
       {!isLoading ? (
@@ -37,7 +35,6 @@ export default function SavedMovies({
             handleSubmitSearchForm={handleSubmitSearchForm}
             searchBar={searchBar}
             handleChangeInput={handleChangeInput}
-            onChecked={onChecked}
             handleChangeCheckbox={handleChangeCheckbox}
             onCheckedSaved={onCheckedSaved}
             handleChangeCheckboxSaved={handleChangeCheckboxSaved}

@@ -20,7 +20,6 @@ export default function Movies({
   handleChangeInput,
   arrMovies,
   arrSavedMovies,
-  onChecked,
   handleChangeCheckbox,
   errorTextMovies,
   errorTextSavedMovies,
@@ -36,7 +35,6 @@ export default function Movies({
             handleSubmitSearchForm={handleSubmitSearchForm}
             searchBar={searchBar}
             handleChangeInput={handleChangeInput}
-            onChecked={onChecked}
             handleChangeCheckbox={handleChangeCheckbox}
             onCheckedSaved={onCheckedSaved}
             handleChangeCheckboxSaved={handleChangeCheckboxSaved}

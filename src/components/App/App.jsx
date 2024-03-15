@@ -40,7 +40,7 @@ function App() {
   const [isPopupMenuOpen, setIsPopupMenuOpen] = React.useState(false);
   const isSomePopupOpen = isPopupMenuOpen; // + "|| другой попап || еще другой попап"
   const navigate = useNavigate();
-  const [currentUser, setCurrentUser] = React.useState(null); // или {}????????????????????????
+  const [currentUser, setCurrentUser] = React.useState(null);
   const [movies, setMovies] = React.useState([]); // массив фильмов, которые пойдут на страницу
   const location = useLocation();
   const [buttonAddMovies, setButtonAddMovies] = React.useState(false);
@@ -101,13 +101,14 @@ function App() {
   //ИЗМЕНЕНИЕ ЧЕКБОКСА
   function handleChangeCheckbox(e) {
     if (isValidSearch) {
-      setCheckbox(!checkbox);
-      localStorage.setItem("filter-checkbox", !checkbox); // ВОЗМОЖНО !checkbox??????????????????????????????
+      let newCheckbox = !checkbox;
+      localStorage.setItem("filter-checkbox", newCheckbox);
+      setCheckbox(newCheckbox);
       setIsValidSearch(false);
       setIsValid(e.target.closest("form").checkValidity());
       if (e.target.closest("form").checkValidity()) {
         setIsValidSearch(true);
-        getMovies();
+        getMovies(newCheckbox);
       } else {
         setIsValidSearch(false);
       }
@@ -119,7 +120,7 @@ function App() {
     setIsValid(e.target.closest("form").checkValidity());
     if (e.target.closest("form").checkValidity()) {
       setIsValidSearch(true);
-      getSavedMoviesFilter();
+      getSavedMoviesFilter(!checkboxSaved);
     } else {
       setIsValidSearch(false);
     }
@@ -173,13 +174,12 @@ function App() {
         setMovies(JSON.parse(localStorage.getItem("filter-movies")));
         setCheckbox(JSON.parse(localStorage.getItem("filter-checkbox")));
       } else {
-        setSearchFormValue(""); // пробный вариат, вроде, работает, строка поиска пустая
+        setSearchFormValue("");
       }
     } else if (location.pathname === "/saved-movies") {
       setSearchFormValue("");
       setSavedMoviesFilter(savedMovies);
       setCheckboxSaved(false);
-      // setTimeout(() => console.log(savedMovies), 2000); // удали меня
     }
   }, [location]);
 
@@ -191,13 +191,13 @@ function App() {
       const data = await res;
       setSavedMovies(data);
       setSavedMoviesFilter(data);
-      setTimeout(() => setArrSavedMovies(true), 500); // надо ли здесь????
+      setTimeout(() => setArrSavedMovies(true), 500);
     } catch (err) {
       console.error(
         `Что-то пошло не так при получении сохраненных карточек: ${err}`
       );
     }
-    setTimeout(() => setIsLoading(false), 500); // надо ли здесь?
+    setTimeout(() => setIsLoading(false), 500);
   }
 
   React.useEffect(() => {
@@ -206,7 +206,6 @@ function App() {
       email: false,
     });
     if (loggedIn) {
-      // if (!currentUser) {
       mainApi
         .getUserInfo()
         .then((data) => {
@@ -215,7 +214,6 @@ function App() {
         .catch((err) => {
           console.error(`Данные пользователя не получены: ${err}`);
         });
-      // }
       getSavedMovies(); // получить сохраненные фильмы
       if (location.pathname === "/movies") {
         setIsLoading(true);
@@ -224,7 +222,6 @@ function App() {
           setSearchFormValue(
             localStorage.getItem("filter-request-text", searchFormValue)
           );
-          // setCheckbox(JSON.parse(localStorage.getItem("filter-checkbox"))); // НЕ ПОКАЗЫВАЕТ ПОЧЕМУ-ТО????
           setArrMovies(true);
           setTimeout(() => setIsLoading(false), 500);
         } else {
@@ -254,13 +251,14 @@ function App() {
     localStorage.removeItem("filter-checkbox");
     setLoggedIn(false);
     localStorage.removeItem("movies");
-    setSavedMoviesFilter([]); //удалить??????????????
-
-    setMovies([]); //удалить??????????????
-    // setCurrentUser(null); ////////////////// НЕ ЗНАЮ, НАДО ЛИ ЭТО СЮДА ВСТАВЛЯТЬ???
+    setSavedMoviesFilter([]);
+    setMovies([]);
+    setIsValid(false);
+    // setCurrentUser(null);
     //ошибки
     setErrorTextSavedMovies(false);
     setErrorTextMovies(false);
+    setCheckbox(false);
     //смена страницы
     navigate("/");
   }
@@ -401,10 +399,8 @@ function App() {
 
   //ФИЛЬТР
   // ФИЛЬМЫ
-  function getMovies() {
+  function getMovies(filterCheckbox) {
     try {
-      // setIsLoading(true); ////из-за этого не работает чекбокс на обычные фильмы!!!!!
-      // setCheckbox(JSON.parse(localStorage.getItem("filter-checkbox")));
       let arrayMovies = JSON.parse(localStorage.getItem("movies"));
       // фильтрация поиска по названию
       const filterMovies = arrayMovies.filter(
@@ -419,7 +415,6 @@ function App() {
           JSON.stringify(filterChecboxMovies)
         );
         localStorage.setItem("filter-request-text", searchFormValue);
-        // localStorage.setItem("filter-checkbox", checkbox);
         //отражаем на странице
         if (filterMovies.length === 0) {
           setArrMovies(false);
@@ -432,9 +427,8 @@ function App() {
           setTimeout(() => setIsLoading(false), 500);
         }
       }
-
       // фильтрация поиска по времени
-      if (checkbox) {
+      if (filterCheckbox) {
         let filterChecboxMovies = filterMovies.filter(
           (movie) => movie.duration < 40
         );
@@ -449,7 +443,7 @@ function App() {
   }
 
   //СОХРАНЕННЫЕ ФИЛЬМЫ setSavedMoviesFilter
-  function getSavedMoviesFilter() {
+  function getSavedMoviesFilter(checkboxSavedParam) {
     try {
       setIsLoading(true);
       // фильтрация поиска по названию
@@ -471,7 +465,7 @@ function App() {
         }
       }
       // фильтрация поиска по времени
-      if (!checkboxSaved) {
+      if (checkboxSavedParam) {
         let filterChecboxMovies = filterSavedMovies.filter(
           (movie) => movie.duration < 40
         );
@@ -491,10 +485,9 @@ function App() {
     if (e.target.checkValidity()) {
       setIsValidSearch(true);
       if (location.pathname === "/movies") {
-        // setCheckbox(JSON.parse(localStorage.getItem("filter-checkbox"))); // ВСЕ РАВНО НЕ СМОТРИТ НА ЧЕКБОКС!!!!!!!
-        getMovies();
+        getMovies(localStorage.getItem("filter-checkbox"));
       } else if (location.pathname === "/saved-movies") {
-        getSavedMoviesFilter();
+        getSavedMoviesFilter(checkboxSaved);
       }
     } else {
       setIsValidSearch(false);
@@ -534,7 +527,7 @@ function App() {
 
   React.useEffect(() => {
     setSavedMoviesFilter(savedMovies);
-  }, [handleSaveMovies]);
+  }, [savedMovies]);
 
   return (
     <div className="app">
@@ -574,7 +567,6 @@ function App() {
                       handleChangeInput={handleChangeSearchInput}
                       arrMovies={arrMovies}
                       arrSavedMovies={arrSavedMovies}
-                      onchecked={checkbox}
                       handleChangeCheckbox={handleChangeCheckbox}
                       errorTextMovies={errorTextMovies}
                       errorTextSavedMovies={errorTextSavedMovies}
@@ -612,7 +604,6 @@ function App() {
                       handleChangeInput={handleChangeSearchInput}
                       arrMovies={arrMovies}
                       arrSavedMovies={arrSavedMovies}
-                      onchecked={checkbox}
                       handleChangeCheckbox={handleChangeCheckbox}
                       errorTextMovies={errorTextMovies}
                       errorTextSavedMovies={errorTextSavedMovies}
