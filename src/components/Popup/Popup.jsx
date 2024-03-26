@@ -29,11 +29,13 @@ export default function Popup({ name, onClose, isOpen }) {
               isActive ? "popup__link popup__link_active" : "popup__link"
             }
             to="/"
+            onClick={onClose}
           >
             Главная
           </NavLink>
           <NavLink
             to="/movies"
+            onClick={onClose}
             className={({ isActive }) =>
               isActive ? "popup__link popup__link_active" : "popup__link"
             }
@@ -42,6 +44,7 @@ export default function Popup({ name, onClose, isOpen }) {
           </NavLink>
           <NavLink
             to="/saved-movies"
+            onClick={onClose}
             className={({ isActive }) =>
               isActive
                 ? "popup__link popup__link_size_m popup__link_active"
@@ -51,7 +54,11 @@ export default function Popup({ name, onClose, isOpen }) {
             Сохранённые фильмы
           </NavLink>
         </div>
-        <NavLink to="/profile" className="popup__link-profile">
+        <NavLink
+          to="/profile"
+          className="popup__link-profile"
+          onClick={onClose}
+        >
           Аккаунт
         </NavLink>
       </div>

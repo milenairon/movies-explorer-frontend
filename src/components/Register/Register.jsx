@@ -10,32 +10,47 @@ export default function Register({
   name,
   email,
   password,
+  isValid,
+  errors,
 }) {
   return (
     <main className="register">
-      <form name="formRegister" className="register__form" onSubmit={onSubmit}>
+      <form
+        name="formRegister"
+        className="register__form"
+        onSubmit={onSubmit}
+        noValidate
+      >
         <label className="register__label">
           <span className="register__input-name">Имя</span>
           <input
-            className="register__input"
-            // register__input_type_error
+            className={`register__input ${
+              errors.name ? "register__input_type_error" : ""
+            }`}
             type="text"
             name="name"
             minLength={2}
             maxLength={30}
             required={true}
             value={name}
+            pattern="[А-Яа-яA-Za-z\s\-Ёё]+"
             placeholder="Имя"
             onChange={handleChangeInput}
-            pattern="[A-Za-zА-Яа-яЁё\s-]+"
           />
-          <span className="register__input-error-message-live name-input-error-message register__input-error-message-live_visible"></span>
+          <span
+            className={`register__input-error-message-live ${
+              errors.name ? "register__input-error-message-live_visible" : ""
+            }`}
+          >
+            {errors.name}
+          </span>
         </label>
         <label className="register__label">
           <span className="register__input-name">E-mail</span>
           <input
-            className="register__input"
-            // register__input_type_error
+            className={`register__input ${
+              errors.email ? "register__input_type_error" : ""
+            }`}
             type="email"
             name="email"
             minLength={5}
@@ -44,15 +59,22 @@ export default function Register({
             value={email}
             placeholder="Почта"
             onChange={handleChangeInput}
-            pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+            pattern="^(http(s){0,1}:\/\/.){0,1}[\-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([\-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$"
           />
-          <span className="register__input-error-message-live email-input-error-message register__input-error-message-live_visible"></span>
+          <span
+            className={`register__input-error-message-live ${
+              errors.email ? "register__input-error-message-live_visible" : ""
+            }`}
+          >
+            {errors.email}
+          </span>
         </label>
         <label className="register__label">
           <span className="register__input-name">Пароль</span>
           <input
-            className="register__input"
-            // register__input_type_error
+            className={`register__input ${
+              errors.password ? "register__input_type_error" : ""
+            }`}
             type="password"
             name="password"
             minLength={2}
@@ -62,11 +84,22 @@ export default function Register({
             placeholder="Пароль"
             onChange={handleChangeInput}
           />
-          <span className="register__input-error-message-live password-input-error-message register__input-error-message-live_visible"></span>
+          <span
+            className={`register__input-error-message-live ${
+              errors.password
+                ? "register__input-error-message-live_visible"
+                : ""
+            }`}
+          >
+            {errors.password}
+          </span>
         </label>
         <button
+          disabled={!isValid}
           aria-label="Зарегистрироваться"
-          className="register__button"
+          className={`register__button ${
+            isValid ? "" : "register__button_disabled"
+          }`}
           type="submit"
         >
           Зарегистрироваться

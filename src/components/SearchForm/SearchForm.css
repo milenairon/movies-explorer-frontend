@@ -5,6 +5,9 @@
   display: flex;
   padding: 80px 70px 0;
   flex-direction: column;
+  position: relative;
+  top: 0;
+  left: 0;
 }
 /*бокс с поисковой строкой и кнопкой поиск*/
 .search-form__box {
@@ -39,6 +42,18 @@
   border: none;
   border-radius: 5.5px;
   cursor: pointer;
+}
+
+/* Нужно ввести включевое слово */
+.search-form__error {
+  position: absolute;
+  left: 50%;
+  top: 145px;
+  transform: translate(-50%, -50%);
+  color: #ee3465;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
 }
 
 /* ЭФФЕКТЫ ЭФФЕКТЫ ЭФФЕКТЫ */

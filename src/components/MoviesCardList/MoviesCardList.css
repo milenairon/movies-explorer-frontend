@@ -4,6 +4,17 @@
   padding: 80px 70px;
 }
 
+/* Ничего не найдено */
+.movies-card-list__title {
+  color: #8b8b8b;
+  font-weight: 400;
+  font-size: 25px;
+  line-height: 120%;
+  text-align: center;
+  /* margin: 0 auto; */
+  width: 100%;
+}
+
 .movies-card-list__items {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -57,5 +68,8 @@
     padding: 10px 20px;
     margin: 60px auto 0;
     max-width: 240px;
+  }
+  .movies-card-list__title {
+    font-size: 15px;
   }
 }

@@ -2,65 +2,107 @@
 
 import React from "react";
 import "./Profile.css";
-// import { NavLink } from "react-router-dom";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-export default function Profile({ name, loggedIn, readonly }) {
-  // const currentUser = useContext(CurrentUserContext);
+export default function Profile({
+  loggedIn,
+  removeJwt,
+  isValid,
+  errors,
+  onSubmit,
+  handleChangeInput,
+  disabledInput,
+  handleDisabledInput,
+  formValue,
+  inputChange,
+}) {
+  const currentUser = React.useContext(CurrentUserContext);
   return (
     <main className="profile" id="profile">
-      <h1 className="profile__title">Привет, {/*currentUser.name*/}Виталий!</h1>
-      <form name="formProfile" className="profile__form">
+      <h1 className="profile__title">
+        Привет, {currentUser ? currentUser.name : ""}!
+      </h1>
+      <form name="formProfile" className="profile__form" onSubmit={onSubmit}>
         <label className="profile__label">
           <span className="profile__input-name">Имя</span>
           <input
-            className="profile__input"
+            className={`profile__input ${
+              errors.name ? "profile__input_type_error" : ""
+            }`}
             type="text"
             name="name"
             minLength={2}
             maxLength={30}
             required={true}
             placeholder="Имя"
-            pattern="[A-Za-zА-Яа-яЁё\s-]+"
-          />
+            pattern="[А-Яа-яA-Za-z\s\-Ёё]+"
+            onChange={handleChangeInput}
+            value={
+              !inputChange.name && currentUser
+                ? currentUser.name
+                : formValue.name
+            }
+            disabled={disabledInput}
+          ></input>
         </label>
         <label className="profile__label">
           <span className="profile__input-name">E-mail</span>
           <input
-            className="profile__input"
+            className={`profile__input ${
+              errors.email ? "profile__input_type_error" : ""
+            }`}
             type="email"
             name="email"
             minLength={5}
             maxLength={40}
             required={true}
             placeholder="Почта"
-            pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
-          />
+            value={
+              !inputChange.email && currentUser
+                ? currentUser.email
+                : formValue.email
+            }
+            disabled={disabledInput}
+            onChange={handleChangeInput}
+            pattern="^(http(s){0,1}:\/\/.){0,1}[\-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([\-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$"
+          ></input>
         </label>
-        {loggedIn && readonly ? (
+        {loggedIn && disabledInput ? (
           <>
             <button
               aria-label="Редактировать"
               className="profile__button"
-              type="submit"
+              type="button"
+              onClick={handleDisabledInput}
             >
               Редактировать
             </button>
             <button
               aria-label="Выйти из аккаунта"
               className="profile__button profile__button_color_main"
-              type="submit"
+              type="button"
+              onClick={removeJwt}
             >
               Выйти из аккаунта
             </button>
           </>
         ) : (
           <>
-            <span className="profile__input-error-message-web">
-              {/* profile__input-error-message-web_visible */}
+            <span
+              className={`profile__input-error-message-web ${
+                errors.name || errors.email
+                  ? "profile__input-error-message-web_visible"
+                  : ""
+              }`}
+            >
+              {errors.name || errors.email}
             </span>
             <button
               aria-label="Сохранить"
-              className="profile__button-save"
+              disabled={!isValid}
+              className={`profile__button-save ${
+                isValid ? "" : "profile__button-save_disabled"
+              }`}
               type="submit"
             >
               Сохранить

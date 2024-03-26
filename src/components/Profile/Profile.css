@@ -105,6 +105,10 @@
   opacity: 0;
 }
 
+.profile__input_type_error {
+  color: red;
+}
+
 .profile__button-save {
   margin: 223px 0 0;
   color: #ffffff;
