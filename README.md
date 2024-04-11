@@ -1,11 +1,9 @@
-# Дипломный проект: "Movies Explorer" (frontend)
+# Проект: "Фильмы" (frontend)
 
 ---
 
 <div align="center">
-  <a href="https://milenadiploma.nomoredomainswork.ru/">
-    <img width="600" alt="Основной экран приложения" src="https://sun9-69.userapi.com/impg/laToOas9JCGvG0oIqUoD_y4G9Wknos_ZYwFp7A/b5Fhq1njO_I.jpg?size=1280x1840&quality=95&sign=de2be38685f773dbe69f65ca70637653&type=album">
-  </a>
+<img src='/src/images/Обзор многостраничного сайта.gif' alt='обзор проекта'>
 </div>
 
 ---
@@ -13,9 +11,10 @@
 ## Оглавление
 
 1. Описание и функционал;
-2. Ссылки и важная информаци о проекте;
-3. Функциональность;
-4. Технологии, используемые в проекте.
+2. Как запустить проект
+3. Ссылки и важная информаци о проекте;
+4. Функциональность;
+5. Технологии, используемые в проекте.
 
 ---
 
@@ -27,7 +26,7 @@
 2. Для фильмов: получение фильмов со стороннего сайта, возможность добавления, удаления их из сохраненных фильмов, переход на ютубу для просмотра трейлера.
 3. Основная страница: просмотр информации о данном проекте, о изученных технологиях во время обучения, обо мне и ссылками на репозитории прошлых работ.
 
-_Проект написан на реакте и JavaScript._
+_Проект написан на библиблиотеке React и JavaScript._
 
 #### Дипломный проект включал 5 этапов:
 
@@ -43,21 +42,24 @@ _Проект написан на реакте и JavaScript._
 
 ---
 
+## 2. Как запустить проект
+
+1. Скачайте из репозитория https://github.com/milenairon/movies-explorer-frontend и https://github.com/milenairon/movies-explorer-api папки, нажав на кнопку Code → Download ZIP
+2. Извлеките данные из папки.
+3. Скачайте Node.js
+4. '''npm ci''' - установить зависимости
+5. Войдите через командную строку Node.js в папку movies-explorer-frontend. Введите '''npm run start''' (в браузере откроется front-end часть)
+6. Войдите через командную строку Node.js в папку movies-explorer-api. Введите '''npm run dev''' (в браузере откроется back-end часть)
+
+---
+
 ## 2. Ссылки и важная информаци о проекте
 
-Ссылка на макет: https://www.figma.com/file/6FMWkB94wE7KTkcCgUXtnC/Дипломный-проект?type=design&node-id=1-7266&mode=design&t=lWxbFcbxWZWgQe5F-0
+Ссылка на макет: https://www.figma.com/file/6FMWkB94wE7KTkcCgUXtnC/Дипломный-проект?type=design&node-id=1-7266&mode=design&t=lWxbFcbxWZWgQe5F-0<br>
+Название макета: dark-2 <br>
 
-Ссылка на пул реквест ветки level-3 https://github.com/milenairon/movies-explorer-frontend/pulls
-
-Ссылка на проект на сервере https://milenadiploma.nomoredomainswork.ru
-
-Название макета: dark-2
-
-Домен на фронт: milenadiploma.nomoredomainswork.ru
-
-Домен на бэк: api.milenadiploma.nomoredomainswork.ru
-
-IP 158.160.101.141
+Ссылка на front-end репозиторий: https://github.com/milenairon/movies-explorer-frontend <br>
+Ссылка на back-end репозиторий: https://github.com/milenairon/movies-explorer-api
 
 ---
 
@@ -86,3 +88,10 @@ IP 158.160.101.141
           <p className="techs__tech">mongoDB</p>
         </li>
  </ul>
+
+## 7. Планы по улучшению
+
+1. Добавить кнопку показа информации о фильме: страна, режисер и т.д.
+2. Добавить другие фильтры по карточкам фильмов: по стране, режисеру, описанию.
+3. Добавить кнопку с функцией "Не показывать этот фильм", страницу с заблокированными фильмами
+4. Кроссбраузерность

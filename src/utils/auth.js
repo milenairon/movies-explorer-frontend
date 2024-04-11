@@ -1,5 +1,5 @@
 // РЕГИСТРАЦИЯ, АВТОРИЗАЦИЯ, ПРОВЕРКА ТОКЕНА
-export const BASE_URL = "https://api.milenadiploma.nomoredomainswork.ru"; // http://localhost:3005
+export const BASE_URL = "http://localhost:3005"; // https://api.milenadiploma.nomoredomainswork.ru
 
 //Зарегистрировать
 export const register = (name, email, password) => {
