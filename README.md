@@ -1,9 +1,9 @@
-# Проект: "Фильмы" (backend)
+# Проект: "Фильмы" (frontend)
 
 ---
 
 <div align="center">
-<img src='/images/Обзор многостраничного сайта.gif' alt='обзор проекта'>
+<img src='/src/images/Обзор многостраничного сайта.gif' alt='обзор проекта'>
 </div>
 
 ---
@@ -91,8 +91,6 @@ _Проект написан на библиблиотеке React и JavaScript
           <p className="techs__tech">mongoDB</p>
         </li>
  </ul>
-
----
 
 ## 5. Планы по улучшению
 
